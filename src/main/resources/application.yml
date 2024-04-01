@@ -1,0 +1,15 @@
+
+spring:
+  application:
+    name: "snap-campus"
+  datasource:
+    url: url
+    username: username
+    password: password
+    driver-class-name: com.mysql.cj.jdbc.Driver
+  profiles:
+    include: secret
+server:
+  servlet:
+    encoding:
+      force-response: true
