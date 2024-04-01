@@ -1,0 +1,46 @@
+{{>layout/header}}
+	<div class="section search-result-wrap">
+		<div class="container">
+            <div class="row">
+                <div class="col-md-6 offset-md-3">
+                    <div class="card">
+                        <div class="card-body">
+                            <h1 class="card-title text-center">회원가입</h1>
+                            <form action="/member/signup/email/send" method="POST">
+
+                                <div class="mb-3">
+                                    <div class="row">
+                                        <div class="col-12">
+                                            <label for="inputEmail" class="form-label">이메일</label>
+                                        </div>
+                                    </div>
+                                    <div class="row g-0 align-items-center">
+                                        <div class="col-7">
+                                            <input type="email" class="form-control" id="email">
+                                        </div>
+                                        <div class="col-5">
+                                            <button type="submit" class="btn btn-primary w-100">인증번호 전송</button>
+                                        </div>
+                                    </div>
+                                    <div id="emailHelp" class="form-text text-danger">에러 메시지 테스트.</div>
+                                </div>
+                            </form>
+                            <form action="/member/signup/email/check" method="POST">
+                                <div class="mb-3">
+                                    <label for="inputEmail" class="form-label">인증번호</label>
+                                    <input type="text" class="form-control" id="verificationNum" aria-describedby="emailHelp">
+                                    <div id="emailHelp" class="form-text text-danger">에러 메시지 테스트.</div>
+                                </div>
+
+                                <button type="submit" class="btn btn-primary w-100">인증번호 확인</button>
+                            </form>
+                            <div class="text-end mt-4">
+                                <a href="/member/login">로그인</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+		</div>
+	</div>
+{{>layout/footer}}
