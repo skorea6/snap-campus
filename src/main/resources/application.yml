@@ -1,15 +1,42 @@
-
+server:
+  port: 8080
+  servlet:
+    context-path: /
+    encoding:
+      charset: UTF-8
+      enabled: true
+      force: true
 spring:
   application:
     name: "snap-campus"
+#  web:
+#    resources:
+#      add-mappings: true
+#  mvc:
+#    throw-exception-if-no-handler-found: false
   datasource:
     url: url
     username: username
     password: password
     driver-class-name: com.mysql.cj.jdbc.Driver
+  jpa:
+    open-in-view: true
+    hibernate:
+      ddl-auto: update
+    properties:
+      hibernate:
+        default_batch_fetch_size: 100
+        show_sql: false
+        format_sql: true
+        highlight_sql: true
+  data:
+    redis:
+      host: localhost
+      port: 6379
   profiles:
     include: secret
-server:
-  servlet:
-    encoding:
-      force-response: true
+
+aws:
+  ses:
+    access_key: access_key
+    secret_key: secret_key
