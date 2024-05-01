@@ -60,6 +60,31 @@ public record SnapPrincipal(
     }
 
     @Override
+    public String password() {
+        return password;
+    }
+
+    @Override
+    public String nick() {
+        return nick;
+    }
+
+    @Override
+    public String name() {
+        return name;
+    }
+
+    @Override
+    public String email() {
+        return email;
+    }
+
+    @Override
+    public String department() {
+        return department;
+    }
+
+    @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
         return authorities;
     }
