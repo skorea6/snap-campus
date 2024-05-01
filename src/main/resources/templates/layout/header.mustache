@@ -26,6 +26,8 @@
 
     <link rel="stylesheet" href="/css/flatpickr.min.css">
 
+    <script type="text/javascript" src="https://openapi.map.naver.com/openapi/v3/maps.js?ncpClientId=bsya7q0qi7"></script>
+    <script src="https://cdn.jsdelivr.net/npm/jquery@3.7.1/dist/jquery.min.js"></script>
 
     <title>스냅 캠퍼스</title>
 </head>
@@ -83,8 +85,14 @@
                         </ul>
                     </div>
                     <div class="col-2 text-end">
-                        <a href="/member/login" class="me-2 text-white">로그인</a>
-                        <a href="/member/signup" class="text-white">회원가입</a>
+                        {{#auth}}
+                            <a href="#" class="me-2 text-white">{{auth.username}}({{auth.nick}})</a>
+                            <a href="/logout" class="text-white">로그아웃</a>
+                        {{/auth}}
+                        {{^auth}}
+                            <a href="/member/login" class="me-2 text-white">로그인</a>
+                            <a href="/member/signup" class="text-white">회원가입</a>
+                        {{/auth}}
                     </div>
                 </div>
             </div>
