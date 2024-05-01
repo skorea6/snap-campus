@@ -5,9 +5,8 @@
                 <div class="col-md-6 offset-md-3">
                     <div class="card">
                         <div class="card-body">
-                            <h1 class="card-title text-center">일반 회원가입</h1>
-                            <form action="/member/signup/verification/email/send" method="POST">
-
+                            <h1 class="card-title text-center">회원가입 (이메일 인증)</h1>
+                            <form action="/member/signup/verification/email/check" method="POST">
                                 <div class="mb-3">
                                     <div class="row">
                                         <div class="col-12">
@@ -16,15 +15,20 @@
                                     </div>
                                     <div class="row align-items-center">
                                         <div class="col-12">
-                                            <input type="email" class="form-control" id="email" name="email" value="{{#data.email}}{{data.email}}{{/data.email}}">
+                                            <input type="email" class="form-control" id="email" name="email" value="{{#email}}{{email}}{{/email}}" readonly>
                                         </div>
-                                        <div class="form-text text-danger">{{errorMessage}}</div>
-                                        <div class="form-text text-info">{{message}}</div>
-                                        <div class="col-12">
-                                            <button type="submit" class="btn btn-primary w-100">이메일로 1초 가입하기</button>
-                                        </div>
+                                        <div class="form-text text-info">해당 이메일로 인증번호가 발송되었습니다!</div>
                                     </div>
                                 </div>
+                                <div class="mb-3">
+                                    <label class="form-label">인증번호</label>
+                                    <input type="text" class="form-control" name="verificationNumber" value="{{#data}}{{data}}{{/data}}">
+                                </div>
+
+                                <div class="form-text text-danger">{{errorMessage}}</div>
+                                <div class="form-text text-info">{{message}}</div>
+
+                                <button type="submit" class="btn btn-primary w-100">인증번호 확인</button>
                             </form>
                             <div class="text-end mt-4">
                                 <a href="/member/login">로그인</a>
