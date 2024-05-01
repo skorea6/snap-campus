@@ -1,4 +1,11 @@
 {{>layout/header}}
+    <section class="section" style="padding-top: 2rem;padding-bottom: 2rem;">
+        <div class="container">
+            <div class="row">
+                <div id="map" style="width:100%;height:400px;"></div>
+            </div>
+        </div>
+    </section>
 
 	<!-- Start retroy layout blog posts -->
 	<section class="section bg-light">
@@ -59,6 +66,7 @@
 		</div>
 	</section>
 	<!-- End retroy layout blog posts -->
+
 
 	<!-- Start posts-entry -->
 	<section class="section posts-entry">
@@ -479,4 +487,112 @@
 
 		</div>
 	</div>
+<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">장소 추가</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <div class="mb-3">
+                    <label class="form-label">장소 이름</label>
+                    <input type="text" class="form-control" name="placeName" value="">
+                </div>
+                <div class="mb-3">
+                    <label class="form-label">장소 유형</label>
+                    <input type="text" class="form-control" name="placeType" value="">
+                </div>
+                <div class="mb-3">
+                    <label class="form-label">장소 설명</label>
+                    <input type="text" class="form-control" name="placeDescription" value="">
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">닫기</button>
+                <button type="button" class="btn btn-primary">장소 추가하기</button>
+            </div>
+        </div>
+    </div>
+</div>
+<script>
+    var mapOptions = {
+        center: new naver.maps.LatLng(37.45143458930621, 127.13040967046076),
+        zoom: 17
+    };
+
+    var map = new naver.maps.Map('map', mapOptions);
+    var existingMarkers = []; // 이미 추가된 마커를 저장하는 배열
+
+    // 지정된 위도와 경도 범위
+    var latMin = 37.441691518620836;
+    var latMax = 37.46326213811896;
+    var lngMin = 127.1245976455175;
+    var lngMax = 127.14096972165339;
+
+    // 클릭한 위치가 지정된 범위 내에 있는지 확인하는 함수
+    function isWithinSpecifiedRange(lat, lng) {
+        return lat >= latMin && lat <= latMax && lng >= lngMin && lng <= lngMax;
+    }
+
+    function isWithinDistance(lat1, lng1, lat2, lng2, threshold) {
+        var earthRadius = 6371; // 지구의 반지름(km)
+        var dLat = degreesToRadians(lat2-lat1);
+        var dLng = degreesToRadians(lng2-lng1);
+        var a =
+                Math.sin(dLat/2) * Math.sin(dLat/2) +
+                Math.cos(degreesToRadians(lat1)) * Math.cos(degreesToRadians(lat2)) *
+                Math.sin(dLng/2) * Math.sin(dLng/2);
+        var c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1-a));
+        var distance = earthRadius * c;
+        return distance <= threshold; // threshold는 km 단위
+    }
+
+    function degreesToRadians(degrees) {
+        return degrees * (Math.PI/180);
+    }
+
+    naver.maps.Event.addListener(map, 'click', function(e) {
+        var lat = e.coord.lat();
+        var lng = e.coord.lng();
+        var canAddMarker = true;
+
+        if(!isWithinSpecifiedRange(lat, lng)) {
+            canAddMarker = false;
+        }
+
+        // 이미 있는 마커와의 거리를 체크
+        for(var i=0; i < existingMarkers.length; i++) {
+            var existingMarker = existingMarkers[i];
+            if(isWithinDistance(lat, lng, existingMarker.position.lat(), existingMarker.position.lng(), 0.03)) { // 0.05km 이내에 마커가 존재하면 추가하지 않음
+                canAddMarker = false;
+                break;
+            }
+        }
+
+        // 새 마커 추가
+        if(canAddMarker) {
+            $('#exampleModal').modal('show');
+
+            var marker = new naver.maps.Marker({
+                position: new naver.maps.LatLng(lat, lng),
+                icon: {
+                    content: [
+                        `<div style="display: flex; flex-direction: column; align-items: center; width: 80px; height: 30px;">`,
+                        ` <div style="display: flex; justify-content: center; align-items: center; width: 30px; height: 30px;">`,
+                        ` <img src="https://www.gachon.ac.kr/sites/kor/images/sub/slogan_3.png" style="width: 30px; background-color: white; height: 30px; border-radius: 50%;"/>`,
+                        ` </div>`,
+                        ` <div style="text-align: center; background-color: yellow; border-radius: 10px; ">이름 테스트</div>`,
+                        `</div>`
+                    ].join(''),
+                    size: new naver.maps.Size(30, 30),
+                    scaledSize: new naver.maps.Size(30, 30),
+                    origin: new naver.maps.Point(0, 0)
+                },
+                map: map
+            });
+            existingMarkers.push(marker); // 추가된 마커를 배열에 저장
+        }
+    });
+</script>
 {{>layout/footer}}
