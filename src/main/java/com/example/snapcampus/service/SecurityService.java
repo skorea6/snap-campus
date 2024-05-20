@@ -34,6 +34,12 @@ public class SecurityService {
         }
     }
 
+    public void checkIsLogined(){
+        if(getMemberUserId() == null){
+            throw new IllegalArgumentException("로그인 후 이용 가능합니다.");
+        }
+    }
+
     public List<String> getAuthorities() {
         SnapPrincipal principal = getPrincipal();
         if (principal != null) {
