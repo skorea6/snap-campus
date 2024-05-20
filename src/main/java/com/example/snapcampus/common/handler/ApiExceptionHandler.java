@@ -12,7 +12,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-@RestControllerAdvice
+@RestControllerAdvice(basePackages = "com.example.snapcampus.controller.api")
 public class ApiExceptionHandler {
 
     @ExceptionHandler(MethodArgumentNotValidException.class)
@@ -23,14 +23,20 @@ public class ApiExceptionHandler {
 //        }
         List<FieldError> fieldErrors = ex.getBindingResult().getFieldErrors();
         String defaultMessage = fieldErrors.get(0).getDefaultMessage();
-        BaseResponse<String> response = new BaseResponse<>(defaultMessage);
+        BaseResponse<String> response = new BaseResponse<>(HttpStatus.BAD_REQUEST.value(), defaultMessage);
+        return new ResponseEntity<>(response, HttpStatus.BAD_REQUEST);
+    }
+
+    @ExceptionHandler(IllegalArgumentException.class)
+    public ResponseEntity<BaseResponse<String>> handleIllegalArgumentExceptions(IllegalArgumentException ex) {
+        BaseResponse<String> response = new BaseResponse<>(HttpStatus.BAD_REQUEST.value(), ex.getMessage());
         return new ResponseEntity<>(response, HttpStatus.BAD_REQUEST);
     }
 
     // 모든 기타 예외 처리
     @ExceptionHandler(Exception.class)
     public ResponseEntity<BaseResponse<String>> handleAllExceptions(Exception ex) {
-        BaseResponse<String> response = new BaseResponse<>("서버 오류가 발생했습니다.");
+        BaseResponse<String> response = new BaseResponse<>(HttpStatus.INTERNAL_SERVER_ERROR.value(), "서버 오류가 발생했습니다.");
         return new ResponseEntity<>(response, HttpStatus.INTERNAL_SERVER_ERROR);
     }
 }
