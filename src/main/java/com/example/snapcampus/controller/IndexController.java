@@ -1,15 +1,25 @@
 package com.example.snapcampus.controller;
 
-import com.example.snapcampus.service.SecurityService;
-import org.springframework.security.core.context.SecurityContextHolder;
+import com.example.snapcampus.dto.response.map.MapResponse;
+import com.example.snapcampus.service.MapService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 
+import java.util.List;
+
 @Controller
 public class IndexController {
+    private final MapService mapService;
+
+    public IndexController(MapService mapService) {
+        this.mapService = mapService;
+    }
+
     @GetMapping("/")
-    public String index() {
+    public String index(Model model) {
+        List<MapResponse> places = mapService.getAllPlace();
+        model.addAttribute("places", places);
         return "/index";
     }
 
