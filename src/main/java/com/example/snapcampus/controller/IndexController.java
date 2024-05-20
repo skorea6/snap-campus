@@ -1,6 +1,6 @@
 package com.example.snapcampus.controller;
 
-import com.example.snapcampus.dto.response.map.MapResponse;
+import com.example.snapcampus.dto.response.map.MapDtoResponse;
 import com.example.snapcampus.service.MapService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -18,7 +18,7 @@ public class IndexController {
 
     @GetMapping("/")
     public String index(Model model) {
-        List<MapResponse> places = mapService.getAllPlace();
+        List<MapDtoResponse> places = mapService.getAllPlace();
         model.addAttribute("places", places);
         return "/index";
     }
