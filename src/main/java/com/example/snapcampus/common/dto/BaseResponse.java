@@ -21,6 +21,11 @@ public class BaseResponse<T> {
         this.data = data;
     }
 
+    public BaseResponse(int statusCode, String statusMessage) {
+        this.statusCode = statusCode;
+        this.statusMessage = statusMessage;
+    }
+
     public BaseResponse(String statusMessage) {
         this.statusMessage = statusMessage;
     }
