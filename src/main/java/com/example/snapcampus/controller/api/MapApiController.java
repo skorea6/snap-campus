@@ -22,7 +22,9 @@ public class MapApiController {
     @PostMapping("/place/add")
     public BaseResponse<Object> addPlace(@RequestBody @Valid MapPlaceAddRequest mapPlaceAddRequest) {
         securityService.checkIsLogined();
-        String resultMsg = mapService.addPlace(mapPlaceAddRequest);
+
+        String memberUserId = securityService.getMemberUserId();
+        String resultMsg = mapService.addPlace(memberUserId, mapPlaceAddRequest);
         return new BaseResponse<>(resultMsg);
     }
 }
