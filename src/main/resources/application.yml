@@ -36,7 +36,18 @@ spring:
   profiles:
     include: secret
 
+cloud:
+  aws:
+    credentials:
+      access-key: access-key
+      secret-key: secret-key
+    region:
+      static: ap-northeast-2
+    stack:
+      auto: false
 aws:
+  s3:
+    bucket: bucket
   ses:
     access_key: access_key
     secret_key: secret_key
