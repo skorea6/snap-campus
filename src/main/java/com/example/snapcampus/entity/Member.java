@@ -1,7 +1,7 @@
 package com.example.snapcampus.entity;
 
 
-import com.example.snapcampus.common.status.RoleType;
+import com.example.snapcampus.dto.response.member.MemberDtoResponse;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
@@ -57,6 +57,10 @@ public class Member extends AuditingFields {
         this.name = name;
         this.email = email;
         this.department = department;
+    }
+
+    public MemberDtoResponse toDto() {
+        return new MemberDtoResponse(id, userId, nick, name, department);
     }
 
     // TODO: of, equals, hashcode METHODS
