@@ -13,7 +13,7 @@ public class PatternUtil {
     public static final String PASSWORD_MESSAGE = "영어, 숫자, 특정 특수문자를 포함한 8~20자리로 입력해주세요.";
     public static final String NICK_MESSAGE = "영어, 한글, 숫자, 특정 특수문자만 가능하며, 2~20자리로 입력해주세요.";
     public static final String NAME_MESSAGE = "영문, 한글만 가능하며, 1~20자리로 입력해주세요.";
-    public static final String DATE_MESSAGE = "날짜를 입력해주세요.";
-    public static final String DATETIME_MESSAGE = "날짜와 시간을 입력해주세요.";
+    public static final String DATE_MESSAGE = "날짜를 yyyy-MM-dd 형식으로 입력해주세요.";
+    public static final String DATETIME_MESSAGE = "날짜와 시간을 yyyy-MM-dd HH:mm:ss 형식으로 입력해주세요.";
 
 }

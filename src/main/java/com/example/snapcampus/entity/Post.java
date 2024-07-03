@@ -1,6 +1,7 @@
 package com.example.snapcampus.entity;
 
 import com.example.snapcampus.dto.response.post.PostDtoResponse;
+import com.example.snapcampus.util.DateUtil;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
@@ -39,13 +40,14 @@ public class Post extends AuditingFields{
     @Setter
     private Event event;
 
-//    @Column(nullable = false)
-//    private String title;
+    @Column(nullable = false)
+    private String title;
 
     @Column(nullable = false)
     private String description;
 
     @ElementCollection(fetch = FetchType.LAZY)
+    @Setter
     private List<String> images;
 
     @Column(nullable = false)
@@ -54,7 +56,8 @@ public class Post extends AuditingFields{
     @Column(nullable = false)
     private String department;
 
-    public Post(String description, String department) {
+    public Post(String title, String description, String department) {
+        this.title = title;
         this.description = description;
         this.department = department;
     }
@@ -64,6 +67,6 @@ public class Post extends AuditingFields{
     }
 
     public PostDtoResponse toDto(Long columnIndex){
-        return new PostDtoResponse(id, description, likeCount, department, images, columnIndex, member.toDto());
+        return new PostDtoResponse(id, title, description, likeCount, department, DateUtil.formatDateTime(createdAt), images.get(0), images, columnIndex, member.toDto());
     }
 }
