@@ -25,6 +25,7 @@ spring:
       ddl-auto: update
     properties:
       hibernate:
+#        dialect: org.hibernate.dialect.H2Dialect #추가
         default_batch_fetch_size: 100
         show_sql: false
         format_sql: true
@@ -35,7 +36,14 @@ spring:
       port: 6379
   profiles:
     include: secret
-
+logging:
+  pattern:
+    console: "[%d{HH:mm:ss.SSS}][%-5level][%logger.%method:line%line] - %msg%n"
+  level:
+    org:
+      hibernate:
+        SQL: debug
+        type.descriptor.sql: trace
 cloud:
   aws:
     credentials:
