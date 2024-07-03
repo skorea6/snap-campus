@@ -9751,8 +9751,8 @@ textarea {
   position: relative; }
 
 .section {
-  padding-top: 4rem;
-  padding-bottom: 4rem; }
+  padding-top: 2rem;
+  padding-bottom: 2rem; }
   .section .heading {
     font-size: 30px;
     font-weight: 700; }

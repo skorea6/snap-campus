@@ -3,6 +3,7 @@ package com.example.snapcampus.controller.api;
 
 import com.example.snapcampus.common.dto.BaseResponse;
 import com.example.snapcampus.dto.request.map.MapPlaceAddRequest;
+import com.example.snapcampus.dto.response.map.MapAddDtoResponse;
 import com.example.snapcampus.service.MapService;
 import com.example.snapcampus.service.SecurityService;
 import jakarta.validation.Valid;
@@ -20,11 +21,11 @@ public class MapApiController {
     }
 
     @PostMapping("/place/add")
-    public BaseResponse<Object> addPlace(@RequestBody @Valid MapPlaceAddRequest mapPlaceAddRequest) {
+    public BaseResponse<MapAddDtoResponse> addPlace(@RequestBody @Valid MapPlaceAddRequest mapPlaceAddRequest) {
         securityService.checkIsLogined();
 
         String memberUserId = securityService.getMemberUserId();
-        String resultMsg = mapService.addPlace(memberUserId, mapPlaceAddRequest);
-        return new BaseResponse<>(resultMsg);
+        MapAddDtoResponse response = mapService.addPlace(memberUserId, mapPlaceAddRequest);
+        return new BaseResponse<>(response);
     }
 }

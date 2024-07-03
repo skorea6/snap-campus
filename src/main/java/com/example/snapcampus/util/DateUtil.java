@@ -7,11 +7,19 @@ import java.time.format.DateTimeParseException;
 
 public class DateUtil {
     public static String formatDateTime(LocalDateTime date) {
-        return date.format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss"));
+        if(date != null){
+            return date.format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss"));
+        }else{
+            return null;
+        }
     }
 
     public static String formatDate(LocalDate date) {
-        return date.format(DateTimeFormatter.ofPattern("yyyy-MM-dd"));
+        if(date != null){
+            return date.format(DateTimeFormatter.ofPattern("yyyy-MM-dd"));
+        }else{
+            return null;
+        }
     }
 
     public static LocalDate stringToLocalDate(String date){

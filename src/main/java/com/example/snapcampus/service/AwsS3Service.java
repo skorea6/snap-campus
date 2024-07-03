@@ -23,18 +23,24 @@ public class AwsS3Service {
         this.amazonS3 = amazonS3;
     }
 
-    public String uploadFile(MultipartFile file, String path, String fileName) throws IOException {
-        String newFileName = getNewFileName(file, fileName);
-        InputStream fileInputStream = file.getInputStream();
+    public String uploadFile(MultipartFile file, String path, String fileName){
+        try {
+            String newFileName = getNewFileName(file, fileName);
 
-        ObjectMetadata metadata = new ObjectMetadata();
-        metadata.setContentType(file.getContentType());
-        metadata.setContentLength(file.getSize());
+            InputStream fileInputStream = file.getInputStream();
 
-        amazonS3.putObject(bucketName, path + newFileName, fileInputStream, metadata);
-        fileInputStream.close();  // InputStream 을 명시적으로 닫아주는 것이 좋음
+            ObjectMetadata metadata = new ObjectMetadata();
+            metadata.setContentType(file.getContentType());
+            metadata.setContentLength(file.getSize());
 
-        return newFileName;
+            amazonS3.putObject(bucketName, path + newFileName, fileInputStream, metadata);
+            fileInputStream.close();  // InputStream 을 명시적으로 닫아주는 것이 좋음
+
+            return newFileName;
+
+        }catch (IOException e){
+            throw new IllegalArgumentException("S3 파일 업로드에 실패하였습니다.");
+        }
     }
 
     private static String getNewFileName(MultipartFile file, String fileName) {
