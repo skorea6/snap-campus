@@ -1,7 +1,6 @@
 package com.example.snapcampus.dto.response.post;
 
 
-import com.example.snapcampus.dto.response.event.EventDtoResponse;
 import com.example.snapcampus.dto.response.member.MemberDtoResponse;
 import lombok.Getter;
 import lombok.Setter;
@@ -20,10 +19,9 @@ public class PostDtoResponse {
     private String thumbImage;
     private List<String> images;
 
-    private Long columnIndex;
     private MemberDtoResponse member;
 
-    public PostDtoResponse(Long id, String title, String description, Long likeCount, String department, String createdAt, String thumbImage, List<String> images, Long columnIndex, MemberDtoResponse member) {
+    public PostDtoResponse(Long id, String title, String description, Long likeCount, String department, String createdAt, String thumbImage, List<String> images, MemberDtoResponse member) {
         this.id = id;
         this.title = title;
         this.description = description;
@@ -32,7 +30,6 @@ public class PostDtoResponse {
         this.createdAt = createdAt;
         this.thumbImage = thumbImage;
         this.images = images;
-        this.columnIndex = columnIndex;
         this.member = member;
     }
 }
