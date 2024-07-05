@@ -1,10 +1,9 @@
 package com.example.snapcampus.service;
 
 import com.example.snapcampus.dto.request.map.MapPlaceAddRequest;
-import com.example.snapcampus.dto.request.map.MapPlaceGetRequest;
 import com.example.snapcampus.dto.response.map.MapAddDtoResponse;
+import com.example.snapcampus.dto.response.map.MapDetailDtoResponse;
 import com.example.snapcampus.dto.response.map.MapDtoResponse;
-import com.example.snapcampus.dto.response.map.MapListDtoResponse;
 import com.example.snapcampus.entity.Map;
 import com.example.snapcampus.repository.MapRepository;
 import com.example.snapcampus.repository.MemberRepository;
@@ -13,7 +12,6 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-import java.util.Optional;
 
 
 @RequiredArgsConstructor
@@ -23,9 +21,9 @@ public class MapService {
     private final MapRepository mapRepository;
     private final MemberRepository memberRepository;
 
-    public List<MapListDtoResponse> getAllPlace(){
+    public List<MapDtoResponse> getAllPlace(){
         List<Map> maps = mapRepository.findAll();
-        return maps.stream().map(Map::toListDto).toList();
+        return maps.stream().map(Map::toDto).toList();
     }
 
     public MapAddDtoResponse addPlace(String memberUserId, MapPlaceAddRequest mapPlaceAddRequest){
@@ -37,11 +35,11 @@ public class MapService {
         return new MapAddDtoResponse(savedMap.getId());
     }
 
-    public MapDtoResponse getPlace(Long id){
+    public MapDetailDtoResponse getPlace(Long id){
         Map map = mapRepository.findById(id).orElseThrow(
-                () -> new IllegalArgumentException("이미 등록된 아이디입니다.")
+                () -> new IllegalArgumentException("찾을 수 없는 장소입니다.")
         );
 
-        return map.toDto();
+        return map.toDetailDto();
     }
 }
