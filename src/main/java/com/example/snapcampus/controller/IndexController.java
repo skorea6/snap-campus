@@ -1,8 +1,8 @@
 package com.example.snapcampus.controller;
 
-import com.example.snapcampus.dto.response.event.EventDtoResponse;
-import com.example.snapcampus.dto.response.map.MapListDtoResponse;
-import com.example.snapcampus.dto.response.post.PostDtoResponse;
+import com.example.snapcampus.dto.response.event.EventDetailDtoResponse;
+import com.example.snapcampus.dto.response.map.MapDtoResponse;
+import com.example.snapcampus.dto.response.post.PostDetailDtoResponse;
 import com.example.snapcampus.service.MapService;
 import com.example.snapcampus.service.PostService;
 import org.springframework.stereotype.Controller;
@@ -24,15 +24,15 @@ public class IndexController {
 
     @GetMapping("/")
     public String index(Model model) {
-        List<MapListDtoResponse> places = mapService.getAllPlace();
-        List<PostDtoResponse> allPosts = postService.getAllPosts();
+        List<MapDtoResponse> places = mapService.getAllPlace();
+        List<PostDetailDtoResponse> allPosts = postService.getAllPosts();
 
-        List<List<PostDtoResponse>> columnPosts = new ArrayList<>(4);
+        List<List<PostDetailDtoResponse>> columnPosts = new ArrayList<>(4);
         for (int i = 0; i < 4; i++) {
             columnPosts.add(new ArrayList<>());
         }
 
-        EventDtoResponse.processEventPosts(allPosts, columnPosts);
+        EventDetailDtoResponse.processEventPosts(allPosts, columnPosts);
 
         model.addAttribute("places", places);
         model.addAttribute("allColumnPosts", columnPosts);
