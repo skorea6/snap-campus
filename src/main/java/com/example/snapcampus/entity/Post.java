@@ -1,6 +1,7 @@
 package com.example.snapcampus.entity;
 
-import com.example.snapcampus.dto.response.post.PostDtoResponse;
+import com.example.snapcampus.dto.response.post.PostAggregateDtoResponse;
+import com.example.snapcampus.dto.response.post.PostDetailDtoResponse;
 import com.example.snapcampus.util.DateUtil;
 import jakarta.persistence.*;
 import lombok.Getter;
@@ -66,7 +67,11 @@ public class Post extends AuditingFields{
 
     }
 
-    public PostDtoResponse toDto(Long columnIndex){
-        return new PostDtoResponse(id, title, description, likeCount, department, DateUtil.formatDateTime(createdAt), images.get(0), images, columnIndex, member.toDto());
+    public PostDetailDtoResponse toDetailDto(Long columnIndex){
+        return new PostDetailDtoResponse(id, title, description, likeCount, department, DateUtil.formatDateTime(createdAt), images.get(0), images, columnIndex, member.toDto());
+    }
+
+    public PostAggregateDtoResponse toAggregateDto(){
+        return new PostAggregateDtoResponse(id, title, description, likeCount, department, DateUtil.formatDateTime(createdAt), images.get(0), images, member.toDto(), event.toAggregateDto());
     }
 }

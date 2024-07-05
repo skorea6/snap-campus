@@ -1,6 +1,7 @@
 package com.example.snapcampus.entity;
 
-import com.example.snapcampus.dto.response.event.EventDtoResponse;
+import com.example.snapcampus.dto.response.event.EventAggregateDtoResponse;
+import com.example.snapcampus.dto.response.event.EventDetailDtoResponse;
 import com.example.snapcampus.util.DateUtil;
 import jakarta.persistence.*;
 import lombok.Getter;
@@ -8,11 +9,8 @@ import lombok.Setter;
 import lombok.ToString;
 
 import java.time.LocalDate;
-import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.concurrent.atomic.AtomicInteger;
 import java.util.concurrent.atomic.AtomicLong;
 
 @Getter
@@ -67,14 +65,18 @@ public class Event extends AuditingFields{
 
     }
 
-    public EventDtoResponse toDto(){
+    public EventDetailDtoResponse toDetailDto(){
         AtomicLong counter = new AtomicLong(1);
 
-        return new EventDtoResponse(id, name, description, DateUtil.formatDate(startDate), DateUtil.formatDate(stopDate), organizer, member.toDto(), posts.stream().map(post -> {
+        return new EventDetailDtoResponse(id, name, description, DateUtil.formatDate(startDate), DateUtil.formatDate(stopDate), organizer, member.toDto(), posts.stream().map(post -> {
             long currentIndex = counter.getAndIncrement();
             currentIndex = (currentIndex - 1) % 4 + 1;
-            return post.toDto(currentIndex);
+            return post.toDetailDto(currentIndex);
         }).toList());
+    }
+
+    public EventAggregateDtoResponse toAggregateDto(){
+        return new EventAggregateDtoResponse(id, name, description, DateUtil.formatDate(startDate), DateUtil.formatDate(stopDate), organizer, member.toDto(), map.toDto());
     }
 }
 

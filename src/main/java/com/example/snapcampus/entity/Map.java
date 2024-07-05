@@ -1,8 +1,7 @@
 package com.example.snapcampus.entity;
 
-import com.example.snapcampus.dto.response.event.EventDtoResponse;
+import com.example.snapcampus.dto.response.map.MapDetailDtoResponse;
 import com.example.snapcampus.dto.response.map.MapDtoResponse;
-import com.example.snapcampus.dto.response.map.MapListDtoResponse;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
@@ -59,12 +58,12 @@ public class Map extends AuditingFields{
 
     }
 
-    public MapDtoResponse toDto(){
-        return new MapDtoResponse(id, coordinate_x, coordinate_y, placeName, placeType, placeDescription, member.toDto(), events.stream().map(Event::toDto).toList());
+    public MapDetailDtoResponse toDetailDto(){
+        return new MapDetailDtoResponse(id, coordinate_x, coordinate_y, placeName, placeType, placeDescription, member.toDto(), events.stream().map(Event::toDetailDto).toList());
     }
 
-    public MapListDtoResponse toListDto(){
-        return new MapListDtoResponse(id, coordinate_x, coordinate_y, placeName, placeType, placeDescription, member.toDto());
+    public MapDtoResponse toDto(){
+        return new MapDtoResponse(id, coordinate_x, coordinate_y, placeName, placeType, placeDescription, member.toDto());
     }
 }
 
