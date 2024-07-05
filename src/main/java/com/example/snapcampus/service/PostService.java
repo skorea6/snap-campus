@@ -1,7 +1,8 @@
 package com.example.snapcampus.service;
 
 import com.example.snapcampus.dto.request.post.PostAddRequest;
-import com.example.snapcampus.dto.response.post.PostDtoResponse;
+import com.example.snapcampus.dto.response.post.PostAggregateDtoResponse;
+import com.example.snapcampus.dto.response.post.PostDetailDtoResponse;
 import com.example.snapcampus.entity.Event;
 import com.example.snapcampus.entity.Post;
 import com.example.snapcampus.repository.EventRepository;
@@ -27,15 +28,23 @@ public class PostService {
     private final PostRepository postRepository;
     private final AwsS3Service awsS3Service;
 
-    public List<PostDtoResponse> getAllPosts(){
+    public List<PostDetailDtoResponse> getAllPosts(){
         List<Post> posts = postRepository.findAllByOrderByCreatedAtDesc();
 
         AtomicLong counter = new AtomicLong(1);
         return posts.stream().map(post -> {
             long currentIndex = counter.getAndIncrement();
             currentIndex = (currentIndex - 1) % 4 + 1;
-            return post.toDto(currentIndex);
+            return post.toDetailDto(currentIndex);
         }).toList();
+    }
+
+    public PostAggregateDtoResponse getPost(Long id){
+        Post post = postRepository.findById(id).orElseThrow(
+                () -> new IllegalArgumentException("찾을 수 없는 사진입니다.")
+        );
+
+        return post.toAggregateDto();
     }
 
     public String addPost(String memberUserId, PostAddRequest postAddRequest){
