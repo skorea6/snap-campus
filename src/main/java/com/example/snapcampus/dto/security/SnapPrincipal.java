@@ -42,7 +42,7 @@ public record SnapPrincipal(
                 department,
                 roleTypes.stream()
                         .map(RoleType::name)
-                        .map(SimpleGrantedAuthority::new)
+                        .map(r -> new SimpleGrantedAuthority("ROLE_" + r))
                         .collect(Collectors.toUnmodifiableSet())
         );
     }

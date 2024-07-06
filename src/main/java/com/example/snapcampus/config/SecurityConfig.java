@@ -8,6 +8,7 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
+import org.springframework.security.config.core.GrantedAuthorityDefaults;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.factory.PasswordEncoderFactories;
@@ -26,7 +27,7 @@ public class SecurityConfig {
             "/fonts/**",
             "/js/**",
             "/scss/**",
-            "/favicon.png",
+            "/favicon.ico",
             "/member/login",
             "/member/login/**",
     };
@@ -45,6 +46,7 @@ public class SecurityConfig {
                         .permitAll()
                         .requestMatchers(requestPermitAllUrl)
                         .anonymous()
+                        .requestMatchers("/api/map/place/delete", "/api/event/delete").hasRole("ADMIN")
                         .requestMatchers("/member/**").hasRole("MEMBER")
                         .anyRequest().permitAll()
                 )
@@ -83,4 +85,8 @@ public class SecurityConfig {
         return PasswordEncoderFactories.createDelegatingPasswordEncoder();
     }
 
+//    @Bean
+//    public GrantedAuthorityDefaults grantedAuthorityDefaults() {
+//        return new GrantedAuthorityDefaults(""); // 역할 접두사를 제거
+//    }
 }
