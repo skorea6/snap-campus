@@ -18,10 +18,12 @@ public class Comment extends AuditingFields{
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "member_id", foreignKey = @ForeignKey(name = "fk_comment_member_id"))
+    @ToString.Exclude
     private Member member;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "post_id", foreignKey = @ForeignKey(name = "fk_comment_post_id"))
+    @ToString.Exclude
     private Post post;
 
     @Column(nullable = false)

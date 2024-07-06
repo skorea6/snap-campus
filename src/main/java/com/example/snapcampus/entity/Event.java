@@ -43,14 +43,17 @@ public class Event extends AuditingFields{
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "member_id", foreignKey = @ForeignKey(name = "fk_event_member_id"))
     @Setter
+    @ToString.Exclude
     private Member member;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "map_id", foreignKey = @ForeignKey(name = "fk_event_map_id"))
     @Setter
+    @ToString.Exclude
     private Map map;
 
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "event", cascade = {CascadeType.ALL}, targetEntity = Post.class)
+    @ToString.Exclude
     private List<Post> posts = new ArrayList<>();
 
     public Event(String name, String description, LocalDate startDate, LocalDate stopDate, String organizer) {

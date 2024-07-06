@@ -20,9 +20,9 @@ public class Hashtag extends AuditingFields{
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "post_id", foreignKey = @ForeignKey(name = "fk_hashtag_post_id"))
+    @ToString.Exclude
     private Post post;
 
     @Column(nullable = false)
     private String tag;
 }
-

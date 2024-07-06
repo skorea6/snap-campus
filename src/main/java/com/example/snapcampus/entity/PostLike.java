@@ -17,10 +17,19 @@ public class PostLike extends AuditingFields{
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "member_id", foreignKey = @ForeignKey(name = "fk_post_like_member_id"))
+    @ToString.Exclude
     private Member member;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "post_id", foreignKey = @ForeignKey(name = "fk_post_like_post_id"))
+    @ToString.Exclude
     private Post post;
-}
 
+    public PostLike() {
+    }
+
+    public PostLike(Member member, Post post) {
+        this.member = member;
+        this.post = post;
+    }
+}
