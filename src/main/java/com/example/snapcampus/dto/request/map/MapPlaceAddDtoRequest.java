@@ -10,7 +10,7 @@ import lombok.Setter;
 
 @Getter
 @Setter
-public class MapPlaceAddRequest {
+public class MapPlaceAddDtoRequest {
     @NotNull(message = "좌표 x는 필수 입력 값입니다.")
     private Double coordinate_x;
 
