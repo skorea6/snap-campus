@@ -8,6 +8,7 @@ import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
 
+import java.util.ArrayList;
 import java.util.List;
 
 
@@ -52,10 +53,15 @@ public class Post extends AuditingFields{
     private List<String> images;
 
     @Column(nullable = false)
+    @Setter
     private Long likeCount = 0L;
 
-    @Column(nullable = false)
+    @Column
     private String department;
+
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "post", cascade = {CascadeType.ALL}, targetEntity = PostLike.class)
+    @ToString.Exclude
+    private List<PostLike> postLikes = new ArrayList<>();
 
     public Post(String title, String description, String department) {
         this.title = title;
@@ -65,6 +71,12 @@ public class Post extends AuditingFields{
 
     public Post() {
 
+    }
+
+    public void update(String title, String description, String department) {
+        this.title = title;
+        this.description = description;
+        this.department = department;
     }
 
     public PostDetailDtoResponse toDetailDto(Long columnIndex){
