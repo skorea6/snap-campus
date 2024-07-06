@@ -12,6 +12,7 @@ import java.util.List;
 @Setter
 public class PostAggregateDtoResponse extends PostDtoResponse {
     private EventAggregateDtoResponse event;
+    private Boolean likeStatus = false;
 
     public PostAggregateDtoResponse(Long id, String title, String description, Long likeCount, String department, String createdAt, String thumbImage, List<String> images, MemberDtoResponse member, EventAggregateDtoResponse event) {
         super(id, title, description, likeCount, department, createdAt, thumbImage, images, member);
