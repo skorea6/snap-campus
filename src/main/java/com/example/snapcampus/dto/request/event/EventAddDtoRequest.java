@@ -10,11 +10,9 @@ import jakarta.validation.constraints.Size;
 import lombok.Getter;
 import lombok.Setter;
 
-import java.util.Date;
-
 @Getter
 @Setter
-public class EventAddRequest {
+public class EventAddDtoRequest {
     @NotNull(message = "mapId는 필수 입력 값입니다.")
     private Long mapId;
 
