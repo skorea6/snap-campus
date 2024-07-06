@@ -1,5 +1,6 @@
 package com.example.snapcampus.service;
 
+import com.example.snapcampus.common.status.RoleType;
 import com.example.snapcampus.dto.security.SnapPrincipal;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -37,6 +38,13 @@ public class SecurityService {
     public void checkIsLogined(){
         if(getMemberUserId() == null){
             throw new IllegalArgumentException("로그인 후 이용 가능합니다.");
+        }
+    }
+
+    public void checkIsAdmin(){
+//        getAuthorities().forEach(System.out::println);
+        if(!getAuthorities().contains(RoleType.ADMIN.toString())){
+            throw new IllegalArgumentException("관리자만 이용 가능합니다.");
         }
     }
 
