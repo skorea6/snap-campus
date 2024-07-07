@@ -1,0 +1,292 @@
+{{>layout/header}}
+<div class="flex-fill">
+<section class="section bg-light">
+    <div class="container">
+        <div class="row">
+            <div class="d-flex justify-content-between w-100">
+                <div>
+                    <h1 class="posts-entry-title" style="font-size: 30px;">{{#place}}{{placeName}}{{/place}}</h1>
+                </div>
+                <div class="text-end">
+                    <a href="#" onclick="if(isLogined == true) { $('#eventAddModal').modal('show'); } else { alert('로그인 후 이용 가능합니다.'); }" class="read-more">이벤트 추가</a>
+                     |
+                    <a href="#" onclick="placeDelete()" class="read-more">장소 삭제</a>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <h5>{{#place}}{{placeDescription}}{{/place}} ({{#place}}{{placeType}}{{/place}})</h5>
+        </div>
+
+        <div class="row align-items-stretch retro-layout" style="margin-left: 50px;">
+            {{#place.events}}
+            <div class="row" style="margin-top: 15px">
+                <div class="d-flex justify-content-between w-100">
+                    <div>
+                        <h2 class="posts-entry-title">● {{name}}</h2>
+                    </div>
+                    <div class="text-end">
+                        <a href="#" onclick="openPostAddModal({{id}})" class="read-more">사진 추가</a> |
+                        <a href="#" onclick="eventDelete({{id}})" class="read-more">삭제</a>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <h6>{{description}} {{#organizer}}/ 주최자: {{organizer}}{{/organizer}} {{#startDate}}/ 시작일: {{startDate}}{{/startDate}} {{#stopDate}}/ 종료일: {{stopDate}}{{/stopDate}}</h6>
+            </div>
+            {{#columnPosts}}
+            <div class="col-md-3">
+                {{#.}}
+                <a href="/post/{{id}}" class="h-entry v-height gradient" style="margin-top: 15px">
+
+                    <div class="featured-img" style="background-image: url('https://image.snapcampus.abz.kr/{{thumbImage}}');"></div>
+
+                    <div class="text">
+                        <span class="date">{{createdAt}}</span>
+                        <h2>{{title}}</h2>
+                    </div>
+                </a>
+                {{/.}}
+            </div>
+            {{/columnPosts}}
+            {{/place.events}}
+        </div>
+    </div>
+</section>
+
+<div class="modal fade" id="eventAddModal" tabindex="-1" aria-labelledby="eventAddModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="eventAddModalLabel">이벤트 추가</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <div class="mb-3">
+                    <label class="form-label">이벤트 이름</label>
+                    <input type="text" class="form-control" id="eventName" value="">
+                </div>
+                <div class="mb-3">
+                    <label class="form-label">이벤트 설명</label>
+                    <input type="text" class="form-control" id="eventDescription" value="">
+                </div>
+                <div class="mb-3">
+                    <label class="form-label">이벤트 주최자 (선택)</label>
+                    <input type="text" class="form-control" id="eventOrganizer" value="">
+                </div>
+                <div class="mb-3">
+                    <label class="form-label">시작일 (선택)</label>
+                    <input type="text" class="form-control" id="eventStartDate" value="">
+                </div>
+                <div class="mb-3">
+                    <label class="form-label">종료일 (선택)</label>
+                    <input type="text" class="form-control" id="eventStopDate" value="">
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">닫기</button>
+                <button type="button" class="btn btn-primary" id="addEventButton">이벤트 추가하기</button>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="modal fade" id="postAddModal" tabindex="-1" aria-labelledby="postAddModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="postAddModalLabel">사진 추가</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <div class="mb-3">
+                    <label class="form-label">사진 제목</label>
+                    <input type="text" class="form-control" id="postTitle" value="">
+                </div>
+                <div class="mb-3">
+                    <label class="form-label">사진 설명</label>
+                    <input type="text" class="form-control" id="postDescription" value="">
+                </div>
+                <div class="mb-3">
+                    <label class="form-label">과 이름 (선택)</label>
+                    <input type="text" class="form-control" id="postDepartment" value="">
+                </div>
+                <div class="mb-3">
+                    <label class="form-label">사진 업로드 (여러개 가능)</label>
+                    <input type="file" class="form-control-file" id="postImages" multiple accept=".png, .jpg, .jpeg, .gif" onchange="postPreviewImages()">
+                </div>
+                <div id="postImagePreviewContainer" class="row"></div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">닫기</button>
+                <button type="button" class="btn btn-primary" id="addPostButton">사진 추가하기</button>
+            </div>
+        </div>
+    </div>
+</div>
+</div>
+<script>
+    let isLogined = false;
+    {{#auth}}isLogined = true;{{/auth}}
+
+    let mapId = {{#place}}{{id}}{{/place}};
+    let nowEventId = null;
+
+    function openPostAddModal(eventId){
+        if(isLogined === true) {
+            nowEventId = eventId;
+            $('#postAddModal').modal('show');
+        } else {
+            alert('로그인 후 이용 가능합니다.');
+        }
+    }
+
+    function placeDelete(){
+        if(isLogined === true) {
+            var userResponse = confirm("진심으로 삭제하시겠습니까?");
+            if (userResponse) {
+                var postData = {
+                    id: mapId
+                };
+
+                $.ajax({
+                    url: '/api/map/place/delete',
+                    type: 'POST',
+                    contentType: 'application/json',
+                    data: JSON.stringify(postData),
+                    success: function (response) {
+                        alert(response.statusMessage);
+                        location.href = '/';
+                    },
+                    error: function (xhr, status, error) {
+                        if(xhr.status === 403){
+                            alert("관리자만 이용이 가능한 기능입니다.");
+                        }else{
+                            const errorResponse = JSON.parse(xhr.responseText);
+                            alert(errorResponse.statusMessage);
+                        }
+                    }
+                });
+            }
+        } else {
+            alert('로그인 후 이용 가능합니다.');
+        }
+    }
+
+    function eventDelete(eventId){
+        if(isLogined === true) {
+            var userResponse = confirm("진심으로 삭제하시겠습니까?");
+            if (userResponse) {
+                var postData = {
+                    id: eventId
+                };
+
+                $.ajax({
+                    url: '/api/event/delete',
+                    type: 'POST',
+                    contentType: 'application/json',
+                    data: JSON.stringify(postData),
+                    success: function (response) {
+                        alert(response.statusMessage);
+                        location.reload();
+                    },
+                    error: function (xhr, status, error) {
+                        if(xhr.status === 403){
+                            alert("관리자만 이용이 가능한 기능입니다.");
+                        }else{
+                            const errorResponse = JSON.parse(xhr.responseText);
+                            alert(errorResponse.statusMessage);
+                        }
+                    }
+                });
+            }
+        } else {
+            alert('로그인 후 이용 가능합니다.');
+        }
+    }
+
+    function postPreviewImages() {
+        var files = document.querySelector('input[id="postImages"]').files;
+        var previewContainer = document.getElementById('postImagePreviewContainer');
+        previewContainer.innerHTML = '';  // 미리보기 컨테이너를 초기화
+
+        // 선택된 모든 파일에 대해 루프
+        Array.from(files).forEach(file => {
+            var reader = new FileReader();
+
+            reader.onload = function(e) {
+                var imgElement = document.createElement('img');
+                imgElement.src = e.target.result;
+                imgElement.style.width = '100px';  // 이미지 크기 설정
+                imgElement.style.height = '100px';
+                imgElement.style.margin = '5px';  // 이미지 간격 설정
+                imgElement.className = 'img-thumbnail';  // Bootstrap 클래스 추가
+
+                previewContainer.appendChild(imgElement);
+            };
+
+            reader.readAsDataURL(file);  // 이미지 파일을 Data URL로 읽기
+        });
+    }
+
+    $(document).ready(function() {
+        $('#addEventButton').click(function() {
+            var postData = {
+                mapId: mapId,
+                name: $('input[id="eventName"]').val(),
+                description: $('input[id="eventDescription"]').val(),
+                organizer: $('input[id="eventOrganizer"]').val() === "" ? null : $('input[id="eventOrganizer"]').val(),
+                startDate: $('input[id="eventStartDate"]').val() === "" ? null : $('input[id="eventStartDate"]').val(),
+                stopDate: $('input[id="eventStopDate"]').val() === "" ? null : $('input[id="eventStopDate"]').val()
+            };
+
+            $.ajax({
+                url: '/api/event/add',
+                type: 'POST',
+                contentType: 'application/json',
+                data: JSON.stringify(postData),
+                success: function(response) {
+                    alert(response.statusMessage);
+                    location.reload();
+                    $('#eventAddModal').modal('hide');
+                },
+                error: function(xhr, status, error) {
+                    const errorResponse = JSON.parse(xhr.responseText);
+                    alert(errorResponse.statusMessage);
+                }
+            });
+        });
+
+        $('#addPostButton').click(function() {
+            var formData = new FormData();
+            formData.append('eventId', nowEventId);
+            formData.append('title', $('input[id="postTitle"]').val());
+            formData.append('description', $('input[id="postDescription"]').val());
+            if($('input[id="postDepartment"]').val() !== ""){
+                formData.append('department', $('input[id="postDepartment"]').val());
+            }
+
+            var files = document.querySelector('input[id="postImages"]').files;
+            for (var i = 0; i < files.length; i++) {
+                formData.append('images', files[i]);
+            }
+
+            $.ajax({
+                url: '/api/post/add',
+                type: 'POST',
+                processData: false,  // 파일 전송을 위해 필수
+                contentType: false,  // 파일 전송을 위해 필수
+                data: formData,
+                success: function(response) {
+                    alert(response.statusMessage);
+                    location.reload();
+                    $('#postAddModal').modal('hide');
+                },
+                error: function(xhr, status, error) {
+                    const errorResponse = JSON.parse(xhr.responseText);
+                    alert(errorResponse.statusMessage);
+                }
+            });
+        });
+    });
+</script>
+{{>layout/footer}}
