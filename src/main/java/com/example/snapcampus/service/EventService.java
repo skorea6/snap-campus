@@ -4,15 +4,12 @@ import com.example.snapcampus.dto.request.event.EventAddDtoRequest;
 import com.example.snapcampus.dto.request.event.EventDeleteDtoRequest;
 import com.example.snapcampus.entity.Event;
 import com.example.snapcampus.entity.Map;
-import com.example.snapcampus.entity.Post;
 import com.example.snapcampus.repository.EventRepository;
 import com.example.snapcampus.repository.MapRepository;
 import com.example.snapcampus.repository.MemberRepository;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
-
-import java.util.List;
 
 
 @RequiredArgsConstructor
