@@ -1,8 +1,19 @@
 {{>layout/header}}
+<div class="flex-fill">
     <section class="section" style="padding-top: 2rem;padding-bottom: 2rem;">
         <div class="container">
             <div class="row">
-                <div id="map" style="width:100%;height:400px;"></div>
+                <div class="col-12">
+                    <h1 class="posts-entry-title" style="font-size: 30px;">가천대학교 장소 Map</h1>
+                </div>
+            </div>
+            <div class="row">
+                <h5>지도의 빈 공간을 누르면 장소를 추가하실 수 있습니다</h5>
+            </div>
+            <div class="row">
+                <div class="col-12" style="margin-top: 10px;">
+                    <div id="map" style="width:100%;height:400px;"></div>
+                </div>
             </div>
         </div>
     </section>
@@ -10,483 +21,35 @@
 	<!-- Start retroy layout blog posts -->
 	<section class="section bg-light">
 		<div class="container">
-			<div class="row align-items-stretch retro-layout">
-				<div class="col-md-4">
-					<a href="single.html" class="h-entry mb-30 v-height gradient">
+            <div class="row">
+                <div class="col-12">
+                    <h1 class="posts-entry-title" style="font-size: 30px;">최근 업로드된 사진들</h1>
+                </div>
+            </div>
+            <div class="row">
+                <h5>모든 장소, 이벤트에서 업로드된 최근 사진 목록입니다.</h5>
+            </div>
 
-						<div class="featured-img" style="background-image: url('images/img_2_horizontal.jpg');"></div>
+            <div class="row align-items-stretch retro-layout">
+                {{#allColumnPosts}}
+                    <div class="col-md-3">
+                        {{#.}}
+                            <a href="/post/{{id}}" class="h-entry v-height gradient" style="margin-top: 15px">
 
-						<div class="text">
-							<span class="date">Apr. 14th, 2022</span>
-							<h2>AI can now kill those annoying cookie pop-ups</h2>
-						</div>
-					</a>
-					<a href="single.html" class="h-entry v-height gradient">
+                                <div class="featured-img" style="background-image: url('https://image.snapcampus.abz.kr/{{thumbImage}}');"></div>
 
-						<div class="featured-img" style="background-image: url('images/img_5_horizontal.jpg');"></div>
-
-						<div class="text">
-							<span class="date">Apr. 14th, 2022</span>
-							<h2>Don’t assume your user data in the cloud is safe</h2>
-						</div>
-					</a>
-				</div>
-				<div class="col-md-4">
-					<a href="single.html" class="h-entry img-5 h-100 gradient">
-
-						<div class="featured-img" style="background-image: url('images/img_1_vertical.jpg');"></div>
-
-						<div class="text">
-							<span class="date">Apr. 14th, 2022</span>
-							<h2>Why is my internet so slow?</h2>
-						</div>
-					</a>
-				</div>
-				<div class="col-md-4">
-					<a href="single.html" class="h-entry mb-30 v-height gradient">
-
-						<div class="featured-img" style="background-image: url('images/img_3_horizontal.jpg');"></div>
-
-						<div class="text">
-							<span class="date">Apr. 14th, 2022</span>
-							<h2>Startup vs corporate: What job suits you best?</h2>
-						</div>
-					</a>
-					<a href="single.html" class="h-entry v-height gradient">
-
-						<div class="featured-img" style="background-image: url('images/img_4_horizontal.jpg');"></div>
-
-						<div class="text">
-							<span class="date">Apr. 14th, 2022</span>
-							<h2>Thought you loved Python? Wait until you meet Rust</h2>
-						</div>
-					</a>
-				</div>
-			</div>
+                                <div class="text">
+                                    <span class="date">{{createdAt}}</span>
+                                    <h2>{{title}}</h2>
+                                </div>
+                            </a>
+                        {{/.}}
+                    </div>
+                {{/allColumnPosts}}
+            </div>
 		</div>
 	</section>
-	<!-- End retroy layout blog posts -->
-
-
-	<!-- Start posts-entry -->
-	<section class="section posts-entry">
-		<div class="container">
-			<div class="row mb-4">
-				<div class="col-sm-6">
-					<h2 class="posts-entry-title">Business</h2>
-				</div>
-				<div class="col-sm-6 text-sm-end"><a href="category.html" class="read-more">View All</a></div>
-			</div>
-			<div class="row g-3">
-				<div class="col-md-9">
-					<div class="row g-3">
-						<div class="col-md-6">
-							<div class="blog-entry">
-								<a href="single.html" class="img-link">
-									<img src="images/img_1_sq.jpg" alt="Image" class="img-fluid">
-								</a>
-								<span class="date">Apr. 14th, 2022</span>
-								<h2><a href="single.html">Thought you loved Python? Wait until you meet Rust</a></h2>
-								<p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Unde, nobis ea quis inventore vel voluptas.</p>
-								<p><a href="single.html" class="btn btn-sm btn-outline-primary">Read More</a></p>
-							</div>
-						</div>
-						<div class="col-md-6">
-							<div class="blog-entry">
-								<a href="single.html" class="img-link">
-									<img src="images/img_2_sq.jpg" alt="Image" class="img-fluid">
-								</a>
-								<span class="date">Apr. 14th, 2022</span>
-								<h2><a href="single.html">Startup vs corporate: What job suits you best?</a></h2>
-								<p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Unde, nobis ea quis inventore vel voluptas.</p>
-								<p><a href="single.html" class="btn btn-sm btn-outline-primary">Read More</a></p>
-							</div>
-						</div>
-					</div>
-				</div>
-				<div class="col-md-3">
-					<ul class="list-unstyled blog-entry-sm">
-						<li>
-							<span class="date">Apr. 14th, 2022</span>
-							<h3><a href="single.html">Don’t assume your user data in the cloud is safe</a></h3>
-							<p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Unde, nobis ea quis inventore vel voluptas.</p>
-							<p><a href="#" class="read-more">Continue Reading</a></p>
-						</li>
-
-						<li>
-							<span class="date">Apr. 14th, 2022</span>
-							<h3><a href="single.html">Meta unveils fees on metaverse sales</a></h3>
-							<p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Unde, nobis ea quis inventore vel voluptas.</p>
-							<p><a href="#" class="read-more">Continue Reading</a></p>
-						</li>
-
-						<li>
-							<span class="date">Apr. 14th, 2022</span>
-							<h3><a href="single.html">UK sees highest inflation in 30 years</a></h3>
-							<p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Unde, nobis ea quis inventore vel voluptas.</p>
-							<p><a href="#" class="read-more">Continue Reading</a></p>
-						</li>
-					</ul>
-				</div>
-			</div>
-		</div>
-	</section>
-	<!-- End posts-entry -->
-
-	<!-- Start posts-entry -->
-	<section class="section posts-entry posts-entry-sm bg-light">
-		<div class="container">
-			<div class="row">
-				<div class="col-md-6 col-lg-3">
-					<div class="blog-entry">
-						<a href="single.html" class="img-link">
-							<img src="images/img_1_horizontal.jpg" alt="Image" class="img-fluid">
-						</a>
-						<span class="date">Apr. 14th, 2022</span>
-						<h2><a href="single.html">Thought you loved Python? Wait until you meet Rust</a></h2>
-						<p>Lorem ipsum dolor sit amet consectetur adipisicing elit.</p>
-						<p><a href="#" class="read-more">Continue Reading</a></p>
-					</div>
-				</div>
-				<div class="col-md-6 col-lg-3">
-					<div class="blog-entry">
-						<a href="single.html" class="img-link">
-							<img src="images/img_2_horizontal.jpg" alt="Image" class="img-fluid">
-						</a>
-						<span class="date">Apr. 14th, 2022</span>
-						<h2><a href="single.html">Startup vs corporate: What job suits you best?</a></h2>
-						<p>Lorem ipsum dolor sit amet consectetur adipisicing elit.</p>
-						<p><a href="#" class="read-more">Continue Reading</a></p>
-					</div>
-				</div>
-				<div class="col-md-6 col-lg-3">
-					<div class="blog-entry">
-						<a href="single.html" class="img-link">
-							<img src="images/img_3_horizontal.jpg" alt="Image" class="img-fluid">
-						</a>
-						<span class="date">Apr. 14th, 2022</span>
-						<h2><a href="single.html">UK sees highest inflation in 30 years</a></h2>
-						<p>Lorem ipsum dolor sit amet consectetur adipisicing elit.</p>
-						<p><a href="#" class="read-more">Continue Reading</a></p>
-					</div>
-				</div>
-				<div class="col-md-6 col-lg-3">
-					<div class="blog-entry">
-						<a href="single.html" class="img-link">
-							<img src="images/img_4_horizontal.jpg" alt="Image" class="img-fluid">
-						</a>
-						<span class="date">Apr. 14th, 2022</span>
-						<h2><a href="single.html">Don’t assume your user data in the cloud is safe</a></h2>
-						<p>Lorem ipsum dolor sit amet consectetur adipisicing elit.</p>
-						<p><a href="#" class="read-more">Continue Reading</a></p>
-					</div>
-				</div>
-			</div>
-		</div>
-	</section>
-	<!-- End posts-entry -->
-
-	<!-- Start posts-entry -->
-	<section class="section posts-entry">
-		<div class="container">
-			<div class="row mb-4">
-				<div class="col-sm-6">
-					<h2 class="posts-entry-title">Culture</h2>
-				</div>
-				<div class="col-sm-6 text-sm-end"><a href="category.html" class="read-more">View All</a></div>
-			</div>
-			<div class="row g-3">
-				<div class="col-md-9 order-md-2">
-					<div class="row g-3">
-						<div class="col-md-6">
-							<div class="blog-entry">
-								<a href="single.html" class="img-link">
-									<img src="images/img_1_sq.jpg" alt="Image" class="img-fluid">
-								</a>
-								<span class="date">Apr. 14th, 2022</span>
-								<h2><a href="single.html">Thought you loved Python? Wait until you meet Rust</a></h2>
-								<p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Unde, nobis ea quis inventore vel voluptas.</p>
-								<p><a href="single.html" class="btn btn-sm btn-outline-primary">Read More</a></p>
-							</div>
-						</div>
-						<div class="col-md-6">
-							<div class="blog-entry">
-								<a href="single.html" class="img-link">
-									<img src="images/img_2_sq.jpg" alt="Image" class="img-fluid">
-								</a>
-								<span class="date">Apr. 14th, 2022</span>
-								<h2><a href="single.html">Startup vs corporate: What job suits you best?</a></h2>
-								<p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Unde, nobis ea quis inventore vel voluptas.</p>
-								<p><a href="single.html" class="btn btn-sm btn-outline-primary">Read More</a></p>
-							</div>
-						</div>
-					</div>
-				</div>
-				<div class="col-md-3">
-					<ul class="list-unstyled blog-entry-sm">
-						<li>
-							<span class="date">Apr. 14th, 2022</span>
-							<h3><a href="single.html">Don’t assume your user data in the cloud is safe</a></h3>
-							<p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Unde, nobis ea quis inventore vel voluptas.</p>
-							<p><a href="#" class="read-more">Continue Reading</a></p>
-						</li>
-
-						<li>
-							<span class="date">Apr. 14th, 2022</span>
-							<h3><a href="single.html">Meta unveils fees on metaverse sales</a></h3>
-							<p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Unde, nobis ea quis inventore vel voluptas.</p>
-							<p><a href="#" class="read-more">Continue Reading</a></p>
-						</li>
-
-						<li>
-							<span class="date">Apr. 14th, 2022</span>
-							<h3><a href="single.html">UK sees highest inflation in 30 years</a></h3>
-							<p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Unde, nobis ea quis inventore vel voluptas.</p>
-							<p><a href="#" class="read-more">Continue Reading</a></p>
-						</li>
-					</ul>
-				</div>
-			</div>
-		</div>
-	</section>
-
-	<section class="section">
-		<div class="container">
-
-			<div class="row mb-4">
-				<div class="col-sm-6">
-					<h2 class="posts-entry-title">Politics</h2>
-				</div>
-				<div class="col-sm-6 text-sm-end"><a href="category.html" class="read-more">View All</a></div>
-			</div>
-
-			<div class="row">
-				<div class="col-lg-4 mb-4">
-					<div class="post-entry-alt">
-						<a href="single.html" class="img-link"><img src="images/img_7_horizontal.jpg" alt="Image" class="img-fluid"></a>
-						<div class="excerpt">
-							
-
-							<h2><a href="single.html">Startup vs corporate: What job suits you best?</a></h2>
-							<div class="post-meta align-items-center text-left clearfix">
-								<figure class="author-figure mb-0 me-3 float-start"><img src="images/person_1.jpg" alt="Image" class="img-fluid"></figure>
-								<span class="d-inline-block mt-1">By <a href="#">David Anderson</a></span>
-								<span>&nbsp;-&nbsp; July 19, 2019</span>
-							</div>
-
-							<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Quo sunt tempora dolor laudantium sed optio, explicabo ad deleniti impedit facilis fugit recusandae! Illo, aliquid, dicta beatae quia porro id est.</p>
-							<p><a href="#" class="read-more">Continue Reading</a></p>
-						</div>
-					</div>
-				</div>
-				<div class="col-lg-4 mb-4">
-					<div class="post-entry-alt">
-						<a href="single.html" class="img-link"><img src="images/img_6_horizontal.jpg" alt="Image" class="img-fluid"></a>
-						<div class="excerpt">
-							
-
-							<h2><a href="single.html">Startup vs corporate: What job suits you best?</a></h2>
-							<div class="post-meta align-items-center text-left clearfix">
-								<figure class="author-figure mb-0 me-3 float-start"><img src="images/person_2.jpg" alt="Image" class="img-fluid"></figure>
-								<span class="d-inline-block mt-1">By <a href="#">David Anderson</a></span>
-								<span>&nbsp;-&nbsp; July 19, 2019</span>
-							</div>
-
-							<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Quo sunt tempora dolor laudantium sed optio, explicabo ad deleniti impedit facilis fugit recusandae! Illo, aliquid, dicta beatae quia porro id est.</p>
-							<p><a href="#" class="read-more">Continue Reading</a></p>
-						</div>
-					</div>
-				</div>
-				<div class="col-lg-4 mb-4">
-					<div class="post-entry-alt">
-						<a href="single.html" class="img-link"><img src="images/img_5_horizontal.jpg" alt="Image" class="img-fluid"></a>
-						<div class="excerpt">
-							
-
-							<h2><a href="single.html">Startup vs corporate: What job suits you best?</a></h2>
-							<div class="post-meta align-items-center text-left clearfix">
-								<figure class="author-figure mb-0 me-3 float-start"><img src="images/person_3.jpg" alt="Image" class="img-fluid"></figure>
-								<span class="d-inline-block mt-1">By <a href="#">David Anderson</a></span>
-								<span>&nbsp;-&nbsp; July 19, 2019</span>
-							</div>
-
-							<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Quo sunt tempora dolor laudantium sed optio, explicabo ad deleniti impedit facilis fugit recusandae! Illo, aliquid, dicta beatae quia porro id est.</p>
-							<p><a href="#" class="read-more">Continue Reading</a></p>
-						</div>
-					</div>
-				</div>
-
-
-				<div class="col-lg-4 mb-4">
-					<div class="post-entry-alt">
-						<a href="single.html" class="img-link"><img src="images/img_4_horizontal.jpg" alt="Image" class="img-fluid"></a>
-						<div class="excerpt">
-							
-
-							<h2><a href="single.html">Startup vs corporate: What job suits you best?</a></h2>
-							<div class="post-meta align-items-center text-left clearfix">
-								<figure class="author-figure mb-0 me-3 float-start"><img src="images/person_4.jpg" alt="Image" class="img-fluid"></figure>
-								<span class="d-inline-block mt-1">By <a href="#">David Anderson</a></span>
-								<span>&nbsp;-&nbsp; July 19, 2019</span>
-							</div>
-
-							<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Quo sunt tempora dolor laudantium sed optio, explicabo ad deleniti impedit facilis fugit recusandae! Illo, aliquid, dicta beatae quia porro id est.</p>
-							<p><a href="#" class="read-more">Continue Reading</a></p>
-						</div>
-					</div>
-				</div>
-				<div class="col-lg-4 mb-4">
-					<div class="post-entry-alt">
-						<a href="single.html" class="img-link"><img src="images/img_3_horizontal.jpg" alt="Image" class="img-fluid"></a>
-						<div class="excerpt">
-							
-
-							<h2><a href="single.html">Startup vs corporate: What job suits you best?</a></h2>
-							<div class="post-meta align-items-center text-left clearfix">
-								<figure class="author-figure mb-0 me-3 float-start"><img src="images/person_5.jpg" alt="Image" class="img-fluid"></figure>
-								<span class="d-inline-block mt-1">By <a href="#">David Anderson</a></span>
-								<span>&nbsp;-&nbsp; July 19, 2019</span>
-							</div>
-
-							<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Quo sunt tempora dolor laudantium sed optio, explicabo ad deleniti impedit facilis fugit recusandae! Illo, aliquid, dicta beatae quia porro id est.</p>
-							<p><a href="#" class="read-more">Continue Reading</a></p>
-						</div>
-					</div>
-				</div>
-				<div class="col-lg-4 mb-4">
-					<div class="post-entry-alt">
-						<a href="single.html" class="img-link"><img src="images/img_2_horizontal.jpg" alt="Image" class="img-fluid"></a>
-						<div class="excerpt">
-							
-
-							<h2><a href="single.html">Startup vs corporate: What job suits you best?</a></h2>
-							<div class="post-meta align-items-center text-left clearfix">
-								<figure class="author-figure mb-0 me-3 float-start"><img src="images/person_4.jpg" alt="Image" class="img-fluid"></figure>
-								<span class="d-inline-block mt-1">By <a href="#">David Anderson</a></span>
-								<span>&nbsp;-&nbsp; July 19, 2019</span>
-							</div>
-
-							<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Quo sunt tempora dolor laudantium sed optio, explicabo ad deleniti impedit facilis fugit recusandae! Illo, aliquid, dicta beatae quia porro id est.</p>
-							<p><a href="#" class="read-more">Continue Reading</a></p>
-						</div>
-					</div>
-				</div>
-
-
-				<div class="col-lg-4 mb-4">
-					<div class="post-entry-alt">
-						<a href="single.html" class="img-link"><img src="images/img_1_horizontal.jpg" alt="Image" class="img-fluid"></a>
-						<div class="excerpt">
-							
-
-							<h2><a href="single.html">Startup vs corporate: What job suits you best?</a></h2>
-							<div class="post-meta align-items-center text-left clearfix">
-								<figure class="author-figure mb-0 me-3 float-start"><img src="images/person_3.jpg" alt="Image" class="img-fluid"></figure>
-								<span class="d-inline-block mt-1">By <a href="#">David Anderson</a></span>
-								<span>&nbsp;-&nbsp; July 19, 2019</span>
-							</div>
-
-							<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Quo sunt tempora dolor laudantium sed optio, explicabo ad deleniti impedit facilis fugit recusandae! Illo, aliquid, dicta beatae quia porro id est.</p>
-							<p><a href="#" class="read-more">Continue Reading</a></p>
-						</div>
-					</div>
-				</div>
-				<div class="col-lg-4 mb-4">
-					<div class="post-entry-alt">
-						<a href="single.html" class="img-link"><img src="images/img_4_horizontal.jpg" alt="Image" class="img-fluid"></a>
-						<div class="excerpt">
-							
-							
-
-							<h2><a href="single.html">Startup vs corporate: What job suits you best?</a></h2>
-							<div class="post-meta align-items-center text-left clearfix">
-								<figure class="author-figure mb-0 me-3 float-start"><img src="images/person_2.jpg" alt="Image" class="img-fluid"></figure>
-								<span class="d-inline-block mt-1">By <a href="#">David Anderson</a></span>
-								<span>&nbsp;-&nbsp; July 19, 2019</span>
-							</div>
-							<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Quo sunt tempora dolor laudantium sed optio, explicabo ad deleniti impedit facilis fugit recusandae! Illo, aliquid, dicta beatae quia porro id est.</p>
-							<p><a href="#" class="read-more">Continue Reading</a></p>
-						</div>
-					</div>
-				</div>
-				<div class="col-lg-4 mb-4">
-					<div class="post-entry-alt">
-						<a href="single.html" class="img-link"><img src="images/img_3_horizontal.jpg" alt="Image" class="img-fluid"></a>
-						<div class="excerpt">
-							
-							
-
-							<h2><a href="single.html">Startup vs corporate: What job suits you best?</a></h2>
-							<div class="post-meta align-items-center text-left clearfix">
-								<figure class="author-figure mb-0 me-3 float-start"><img src="images/person_5.jpg" alt="Image" class="img-fluid"></figure>
-								<span class="d-inline-block mt-1">By <a href="#">David Anderson</a></span>
-								<span>&nbsp;-&nbsp; July 19, 2019</span>
-							</div>
-
-							<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Quo sunt tempora dolor laudantium sed optio, explicabo ad deleniti impedit facilis fugit recusandae! Illo, aliquid, dicta beatae quia porro id est.</p>
-							<p><a href="#" class="read-more">Continue Reading</a></p>
-						</div>
-					</div>
-				</div>
-			</div>
-			
-		</div>
-	</section>
-
-	<div class="section bg-light">
-		<div class="container">
-
-			<div class="row mb-4">
-				<div class="col-sm-6">
-					<h2 class="posts-entry-title">Travel</h2>
-				</div>
-				<div class="col-sm-6 text-sm-end"><a href="category.html" class="read-more">View All</a></div>
-			</div>
-
-			<div class="row align-items-stretch retro-layout-alt">
-
-				<div class="col-md-5 order-md-2">
-					<a href="single.html" class="hentry img-1 h-100 gradient">
-						<div class="featured-img" style="background-image: url('images/img_2_vertical.jpg');"></div>
-						<div class="text">
-							<span>February 12, 2019</span>
-							<h2>Meta unveils fees on metaverse sales</h2>
-						</div>
-					</a>
-				</div>
-
-				<div class="col-md-7">
-
-					<a href="single.html" class="hentry img-2 v-height mb30 gradient">
-						<div class="featured-img" style="background-image: url('images/img_1_horizontal.jpg');"></div>
-						<div class="text text-sm">
-							<span>February 12, 2019</span>
-							<h2>AI can now kill those annoying cookie pop-ups</h2>
-						</div>
-					</a>
-
-					<div class="two-col d-block d-md-flex justify-content-between">
-						<a href="single.html" class="hentry v-height img-2 gradient">
-							<div class="featured-img" style="background-image: url('images/img_2_sq.jpg');"></div>
-							<div class="text text-sm">
-								<span>February 12, 2019</span>
-								<h2>Don’t assume your user data in the cloud is safe</h2>
-							</div>
-						</a>
-						<a href="single.html" class="hentry v-height img-2 ms-auto float-end gradient">
-							<div class="featured-img" style="background-image: url('images/img_3_sq.jpg');"></div>
-							<div class="text text-sm">
-								<span>February 12, 2019</span>
-								<h2>Startup vs corporate: What job suits you best?</h2>
-							</div>
-						</a>
-					</div>  
-
-				</div>
-			</div>
-
-		</div>
-	</div>
+</div>
 <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered">
         <div class="modal-content">
@@ -510,12 +73,60 @@
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">닫기</button>
-                <button type="button" class="btn btn-primary">장소 추가하기</button>
+                <button type="button" class="btn btn-primary" id="addPlaceButton">장소 추가하기</button>
             </div>
         </div>
     </div>
 </div>
 <script>
+    let coordinate_y = null;
+    let coordinate_x = null;
+
+    let isLogined = false;
+    {{#auth}}isLogined = true;{{/auth}}
+
+    // Mustache 템플릿을 사용하여 데이터를 JSON 문자열로 변환
+    let jsonString = '[{{#places}}{"coordinate_x": "{{coordinate_x}}", "coordinate_y": "{{coordinate_y}}", "id": "{{id}}", "placeName": "{{placeName}}"},{{/places}}]';
+
+    // 마지막 쉼표를 제거
+    jsonString = jsonString.replace(/,([\]}])/g, '$1');
+
+    // JSON 문자열을 JavaScript 객체로 변환
+    const places = JSON.parse(jsonString.replace(/&quot;/g, '"'));
+    console.log(places);
+
+    $(document).ready(function() {
+        $('#addPlaceButton').click(function() {
+            var placeName = $('input[name="placeName"]').val();
+            var placeType = $('input[name="placeType"]').val();
+            var placeDescription = $('input[name="placeDescription"]').val();
+
+            var placeData = {
+                placeName: placeName,
+                placeType: placeType,
+                placeDescription: placeDescription,
+                coordinate_x: coordinate_x,
+                coordinate_y: coordinate_y
+            };
+
+            $.ajax({
+                url: '/api/map/place/add',
+                type: 'POST',
+                contentType: 'application/json',
+                data: JSON.stringify(placeData),
+                success: function(response) {
+                    alert("장소가 추가되었습니다!");
+                    $('#exampleModal').modal('hide');
+                    location.href = '/place/' + response.data.id;
+                },
+                error: function(xhr, status, error) {
+                    const errorResponse = JSON.parse(xhr.responseText); // 서버 응답을 JSON으로 파싱
+                    alert(errorResponse.statusMessage);  // 오류 메시지 표시
+                }
+            });
+        });
+    });
+
     var mapOptions = {
         center: new naver.maps.LatLng(37.45143458930621, 127.13040967046076),
         zoom: 17
@@ -523,6 +134,7 @@
 
     var map = new naver.maps.Map('map', mapOptions);
     var existingMarkers = []; // 이미 추가된 마커를 저장하는 배열
+    // let temp_place = null;
 
     // 지정된 위도와 경도 범위
     var latMin = 37.441691518620836;
@@ -552,6 +164,35 @@
         return degrees * (Math.PI/180);
     }
 
+    function createPlace(id, lat, lng, placeName){
+        return new naver.maps.Marker({
+            position: new naver.maps.LatLng(lat, lng),
+            icon: {
+                content: [
+                    `<a href="/place/` + id + `"><div style="display: flex; flex-direction: column; align-items: center; width: 80px; height: 30px;">`,
+                    ` <div style="display: flex; justify-content: center; align-items: center; width: 30px; height: 30px;">`,
+                    ` <img src="https://www.gachon.ac.kr/sites/kor/images/sub/slogan_3.png" style="width: 30px; background-color: white; height: 30px; border-radius: 50%;"/>`,
+                    ` </div>`,
+                    ` <div style="text-align: center; background-color: yellow; border-radius: 10px; ">` + placeName + `</div>`,
+                    `</div></a>`
+                ].join(''),
+                size: new naver.maps.Size(30, 30),
+                scaledSize: new naver.maps.Size(30, 30),
+                origin: new naver.maps.Point(0, 0)
+            },
+            map: map
+        });
+    }
+
+    places.forEach((place, index) => {
+        createPlace(place.id, place.coordinate_x, place.coordinate_y, place.placeName);
+    });
+
+    $('#exampleModal').on('hidden.bs.modal', function (e) {
+        const tempMarker = existingMarkers.pop();
+        tempMarker.setMap(null);
+    });
+
     naver.maps.Event.addListener(map, 'click', function(e) {
         var lat = e.coord.lat();
         var lng = e.coord.lng();
@@ -572,26 +213,17 @@
 
         // 새 마커 추가
         if(canAddMarker) {
-            $('#exampleModal').modal('show');
+            if(isLogined == true){
+                $('#exampleModal').modal('show');
 
-            var marker = new naver.maps.Marker({
-                position: new naver.maps.LatLng(lat, lng),
-                icon: {
-                    content: [
-                        `<div style="display: flex; flex-direction: column; align-items: center; width: 80px; height: 30px;">`,
-                        ` <div style="display: flex; justify-content: center; align-items: center; width: 30px; height: 30px;">`,
-                        ` <img src="https://www.gachon.ac.kr/sites/kor/images/sub/slogan_3.png" style="width: 30px; background-color: white; height: 30px; border-radius: 50%;"/>`,
-                        ` </div>`,
-                        ` <div style="text-align: center; background-color: yellow; border-radius: 10px; ">이름 테스트</div>`,
-                        `</div>`
-                    ].join(''),
-                    size: new naver.maps.Size(30, 30),
-                    scaledSize: new naver.maps.Size(30, 30),
-                    origin: new naver.maps.Point(0, 0)
-                },
-                map: map
-            });
-            existingMarkers.push(marker); // 추가된 마커를 배열에 저장
+                coordinate_x = lat;
+                coordinate_y = lng;
+
+                var marker = createPlace(0, lat, lng, "신규 장소")
+                existingMarkers.push(marker); // 추가된 마커를 배열에 저장
+            }else{
+                alert("로그인 후 이용 가능합니다.");
+            }
         }
     });
 </script>
