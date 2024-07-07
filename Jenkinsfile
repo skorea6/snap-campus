@@ -1,5 +1,8 @@
 pipeline{
     agent any
+    tools {
+        gradle 'gradle 8.6'
+    }
     stages{
         stage('Prepare'){
             steps {
