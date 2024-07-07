@@ -7,9 +7,11 @@ pipeline{
             }
         }
         stage('Replace Prod Properties') {
-            withCredentials([file(credentialsId: 'snapCampusProd', variable: 'snapCampusProd')]) {
-                script {
-                    sh 'cp $snapCampusProd ./src/main/resources/application-prod.yml'
+            steps {
+                withCredentials([file(credentialsId: 'snapCampusProd', variable: 'snapCampusProd')]) {
+                    script {
+                        sh 'cp $snapCampusProd ./src/main/resources/application-prod.yml'
+                    }
                 }
             }
         }
