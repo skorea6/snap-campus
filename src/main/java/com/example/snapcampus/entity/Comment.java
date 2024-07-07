@@ -1,6 +1,8 @@
 package com.example.snapcampus.entity;
 
 
+import com.example.snapcampus.dto.response.comment.CommentDtoResponse;
+import com.example.snapcampus.util.DateUtil;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.ToString;
@@ -37,5 +39,32 @@ public class Comment extends AuditingFields{
 
     @Column(nullable = false)
     private Boolean isDeleted = false;
+
+    @Column(nullable = false)
+    private Boolean isUpdated = false;
+
+    public Comment() {
+    }
+
+    public Comment(Member member, Post post, String content) {
+        this.member = member;
+        this.post = post;
+        this.content = content;
+    }
+
+    public void update(String content){
+        this.isUpdated = true;
+        this.content = content;
+    }
+
+    public void delete(String deletedMessage){
+        this.isDeleted = true;
+        this.deletedText = content;
+        this.content = deletedMessage;
+    }
+
+    public CommentDtoResponse toDto(){
+        return new CommentDtoResponse(id, member.toDto(), content, isUpdated, isDeleted, DateUtil.formatDateTimeMonthAndDate(createdAt), DateUtil.formatDateTime(createdAt));
+    }
 }
 
