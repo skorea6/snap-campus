@@ -41,9 +41,13 @@ public class SecurityService {
         }
     }
 
+    public Boolean checkHasAdmin(){
+        return getAuthorities().contains(RoleType.ADMIN.toString());
+    }
+
     public void checkIsAdmin(){
 //        getAuthorities().forEach(System.out::println);
-        if(!getAuthorities().contains(RoleType.ADMIN.toString())){
+        if(!checkHasAdmin()){
             throw new IllegalArgumentException("관리자만 이용 가능합니다.");
         }
     }
