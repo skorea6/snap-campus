@@ -2,7 +2,8 @@
 <div class="section search-result-wrap">
     <div class="container">
         <div class="row">
-            기본 에러 페이지. (오류 발생)
+            {{^errorMsg}}기본 에러 페이지. (오류 발생){{/errorMsg}}
+            {{#errorMsg}}{{errorMsg}}{{/errorMsg}}
         </div>
     </div>
 </div>
