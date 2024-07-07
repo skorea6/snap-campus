@@ -2,7 +2,8 @@ package com.example.snapcampus.controller.api;
 
 
 import com.example.snapcampus.common.dto.BaseResponse;
-import com.example.snapcampus.dto.request.event.EventAddRequest;
+import com.example.snapcampus.dto.request.event.EventAddDtoRequest;
+import com.example.snapcampus.dto.request.event.EventDeleteDtoRequest;
 import com.example.snapcampus.service.EventService;
 import com.example.snapcampus.service.SecurityService;
 import jakarta.validation.Valid;
@@ -23,11 +24,20 @@ public class EventApiController {
     }
 
     @PostMapping("/add")
-    public BaseResponse<Object> addEvent(@RequestBody @Valid EventAddRequest eventAddRequest) {
+    public BaseResponse<Object> addEvent(@RequestBody @Valid EventAddDtoRequest eventAddDtoRequest) {
         securityService.checkIsLogined();
 
         String memberUserId = securityService.getMemberUserId();
-        String resultMsg = eventService.addEvent(memberUserId, eventAddRequest);
+        String resultMsg = eventService.addEvent(memberUserId, eventAddDtoRequest);
+        return new BaseResponse<>(resultMsg);
+    }
+
+    /**
+     * 관리자만 이용 가능
+     */
+    @PostMapping("/delete")
+    public BaseResponse<Object> deleteEvent(@RequestBody @Valid EventDeleteDtoRequest eventDeleteDtoRequest) {
+        String resultMsg = eventService.deleteEvent(eventDeleteDtoRequest);
         return new BaseResponse<>(resultMsg);
     }
 }
