@@ -3,7 +3,7 @@
 cd /volume1/docker/snapcampus
 
 # 환경변수 DOCKER_APP_NAME을 spring으로 설정
-APP_NAME=snapcampus
+NGINX_CONFIG_URL=/volume1/@docker/volumes/0ba82ef715e523ffefe4a8e7c08f879aabc76bea0c059a5910c068358a552902/_data/snapcampus_url.conf
 DOCKER_APP_NAME=spring-snapcampus
 LOG_FILE=./deploy.log
 
@@ -29,7 +29,7 @@ if [ -z "$EXIST_BLUE" ]; then
   sleep 30
 
   # 8112(green)을 8111(blue)로 변경 (nginx proxy manager)
-  sudo /bin/bash -c "sed -i 's/8112/8111/' /etc/nginx/conf.d/${APP_NAME}_url.conf && nginx -s reload"
+  sudo /bin/bash -c "sed -i 's/8112/8111/' ${NGINX_CONFIG_URL} && nginx -s reload"
 
   # /home/ubuntu/deploy.log: 로그 파일에 "green 중단 시작"이라는 내용을 추가
   echo "green 중단 시작 : $(date +%Y)-$(date +%m)-$(date +%d) $(date +%H):$(date +%M):$(date +%S)" >> $LOG_FILE
@@ -49,7 +49,7 @@ else
 
   sleep 30
 
-  sudo /bin/bash -c "sed -i 's/8111/8112/' /etc/nginx/conf.d/snapcampus_url.conf && nginx -s reload"
+  sudo /bin/bash -c "sed -i 's/8111/8112/' ${NGINX_CONFIG_URL} && nginx -s reload"
 
   echo "blue 중단 시작 : $(date +%Y)-$(date +%m)-$(date +%d) $(date +%H):$(date +%M):$(date +%S)" >> $LOG_FILE
   sudo docker-compose -p ${DOCKER_APP_NAME}-blue -f docker-compose.blue.yml down
