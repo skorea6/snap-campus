@@ -14,6 +14,14 @@ public class DateUtil {
         }
     }
 
+    public static String formatDateTimeMonthAndDate(LocalDateTime date) {
+        if(date != null){
+            return date.format(DateTimeFormatter.ofPattern("MM-dd"));
+        }else{
+            return null;
+        }
+    }
+
     public static String formatDate(LocalDate date) {
         if(date != null){
             return date.format(DateTimeFormatter.ofPattern("yyyy-MM-dd"));
