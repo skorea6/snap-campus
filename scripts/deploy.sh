@@ -1,6 +1,6 @@
 #!/bin/bash
 # 작업 디렉토리를 /home/ubuntu/app으로 변경
-cd /volume1/docker/snapcampus
+#cd /volume1/docker/jenkins/custom/snapcampus
 
 # 환경변수 DOCKER_APP_NAME을 spring으로 설정
 #NGINX_CONFIG_URL=/volume1/@docker/volumes/0ba82ef715e523ffefe4a8e7c08f879aabc76bea0c059a5910c068358a552902/_data/snapcampus_url.conf
