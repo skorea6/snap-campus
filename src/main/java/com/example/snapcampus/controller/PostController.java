@@ -32,6 +32,6 @@ public class PostController {
 
         model.addAttribute("post", post);
         model.addAttribute("comments", comments);
-        return "/post/index"; // Mustache 파일 경로
+        return "post/index"; // Mustache 파일 경로
     }
 }

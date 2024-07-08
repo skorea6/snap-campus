@@ -22,9 +22,9 @@ public class CustomErrorController implements ErrorController {
             int statusCode = Integer.parseInt(status.toString());
 
             if (statusCode == HttpStatus.NOT_FOUND.value()) {
-                return "/error/404";
+                return "error/404";
             }else if(statusCode == HttpStatus.FORBIDDEN.value()){
-                return "redirect:/";
+                return "redirect:";
             }
         }
 
@@ -33,6 +33,6 @@ public class CustomErrorController implements ErrorController {
             model.addAttribute("errorMsg", errorMessage.toString());
         }
 
-        return "/error/default";  // 일반 에러 페이지로 이동
+        return "error/default";  // 일반 에러 페이지로 이동
     }
 }

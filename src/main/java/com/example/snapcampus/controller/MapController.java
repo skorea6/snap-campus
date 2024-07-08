@@ -21,6 +21,6 @@ public class MapController {
         MapDetailDtoResponse place = mapService.getPlace(Long.valueOf(id));
 
         model.addAttribute("place", place);
-        return "/place/index"; // Mustache 파일 경로
+        return "place/index"; // Mustache 파일 경로
     }
 }

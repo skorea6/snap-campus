@@ -36,7 +36,7 @@ public class IndexController {
 
         model.addAttribute("places", places);
         model.addAttribute("allColumnPosts", columnPosts);
-        return "/index";
+        return "index";
     }
 
     @GetMapping("/search-result")

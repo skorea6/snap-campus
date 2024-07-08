@@ -37,13 +37,13 @@ public class MemberController {
             model.addAttribute("error", true);
             model.addAttribute("userId", userId);
         }
-        return "/login/index";
+        return "login/index";
     }
 
     @GetMapping("/signup")
     public String signup(HttpServletRequest request, Model model) {
         basicFlashProcess(request, model, new SignUpVerificationSendEmailDtoRequest());
-        return "/signup/index";
+        return "signup/index";
     }
 
     @GetMapping("/signup/check")
@@ -53,11 +53,11 @@ public class MemberController {
         if (verificationToken != null) {
             basicFlashProcess(request, model, "");
             if (!model.containsAttribute("email")) {
-                return "redirect:/member/signup";
+                return "redirect:member/signup";
             }
-            return "/signup/check";
+            return "signup/check";
         }else {
-            return "redirect:/member/signup";
+            return "redirect:member/signup";
         }
     }
 
@@ -68,11 +68,11 @@ public class MemberController {
         if (verificationToken != null) {
             basicFlashProcess(request, model, new MemberSignUpDtoRequest());
             if (!model.containsAttribute("email")) {
-                return "redirect:/member/signup";
+                return "redirect:member/signup";
             }
-            return "/signup/final";
+            return "signup/final";
         }else {
-            return "redirect:/member/signup";
+            return "redirect:member/signup";
         }
     }
 
@@ -90,7 +90,7 @@ public class MemberController {
                 httpServletRequest.getSession().setAttribute("emailVerificationToken", emailVerificationDtoResponse.getToken()); // session 저장
                 redirectAttributes.addFlashAttribute("email", request.getEmail());
 
-                return "redirect:/member/signup/check";
+                return "redirect:member/signup/check";
             } catch (IllegalArgumentException e) {
                 redirectAttributes.addFlashAttribute("errorMessage", e.getMessage());
             } catch (Exception e) {
@@ -99,7 +99,7 @@ public class MemberController {
             }
         }
         redirectAttributes.addFlashAttribute("data", request);
-        return "redirect:/member/signup";
+        return "redirect:member/signup";
     }
 
     @PostMapping("/signup/verification/email/check")
@@ -112,7 +112,7 @@ public class MemberController {
                 redirectAttributes.addFlashAttribute("email", emailVerificationDto.getEmail());
 //                redirectAttributes.addFlashAttribute("message", "이메일 인증 성공!");
 
-                return "redirect:/member/signup/final";
+                return "redirect:member/signup/final";
             } catch (IllegalArgumentException e) {
                 redirectAttributes.addFlashAttribute("errorMessage", e.getMessage());
             } catch (Exception e) {
@@ -120,10 +120,10 @@ public class MemberController {
             }
             redirectAttributes.addFlashAttribute("email", email);
             redirectAttributes.addFlashAttribute("data", verificationNumber);
-            return "redirect:/member/signup/check";
+            return "redirect:member/signup/check";
         } else {
             redirectAttributes.addFlashAttribute("errorMessage", "다시 시도해주세요.");
-            return "redirect:/member/signup";
+            return "redirect:member/signup";
         }
     }
 
@@ -148,7 +148,7 @@ public class MemberController {
                     memberService.signUp(request, verificationToken);
                     redirectAttributes.addFlashAttribute("message", "회원가입이 완료 되었습니다! 로그인하세요.");
 
-                    return "redirect:/member/login";
+                    return "redirect:member/login";
                 } catch (IllegalArgumentException e) {
                     redirectAttributes.addFlashAttribute("errorMessage", e.getMessage());
                 } catch (Exception e) {
@@ -158,10 +158,10 @@ public class MemberController {
             redirectAttributes.addFlashAttribute("email", request.getEmail());
             redirectAttributes.addFlashAttribute("data", request);
 
-            return "redirect:/member/signup/final";
+            return "redirect:member/signup/final";
         } else {
             redirectAttributes.addFlashAttribute("errorMessage", "다시 시도해주세요.");
-            return "redirect:/member/signup";
+            return "redirect:member/signup";
         }
     }
 
