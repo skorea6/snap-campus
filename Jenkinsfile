@@ -36,6 +36,7 @@ pipeline{
                     cp ./docker/Dockerfile /var/jenkins_home/custom/snapcampus
                     cp ./scripts/deploy.sh /var/jenkins_home/custom/snapcampus
                     cp ./build/libs/*.jar /var/jenkins_home/custom/snapcampus
+                    chmod +x /var/jenkins_home/custom/snapcampus/deploy.sh
                     /var/jenkins_home/custom/snapcampus/deploy.sh
                 '''
             }
