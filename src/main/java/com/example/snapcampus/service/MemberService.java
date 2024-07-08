@@ -10,12 +10,16 @@ import com.example.snapcampus.redis.dto.EmailVerificationDtoResponse;
 import com.example.snapcampus.redis.repository.EmailVerificationRepositoryRedis;
 import com.example.snapcampus.repository.MemberRepository;
 import com.example.snapcampus.repository.MemberRoleRepository;
+import com.example.snapcampus.util.MailUtil;
 import com.example.snapcampus.util.RandomUtil;
+import com.example.snapcampus.util.SenderDto;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Optional;
 
 @RequiredArgsConstructor
@@ -110,11 +114,11 @@ public class MemberService {
         );
         emailVerificationRepositoryRedis.save(name, emailVerificationDto, 30); // 30분 타임아웃 제한
 
-//        MailUtil.send(new SenderDto(
-//                new ArrayList<>(Collections.singletonList(emailAddress)),
-//                "스냅캠퍼스 - " + emailSubject,
-//                "안녕하세요, 스냅캠퍼스입니다.<br><br>" + emailContent + "<br>인증번호는 <b>" + verificationNumber + "</b> 입니다."
-//        ));
+        MailUtil.send(new SenderDto(
+                new ArrayList<>(Collections.singletonList(emailAddress)),
+                "스냅캠퍼스 - " + emailSubject,
+                "안녕하세요, 스냅캠퍼스입니다.<br><br>" + emailContent + "<br>인증번호는 <b>" + verificationNumber + "</b> 입니다."
+        ));
 
         return emailVerificationDto.toResponse();
     }
