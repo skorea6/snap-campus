@@ -12,6 +12,7 @@ LOG_FILE=./deploy.log
 EXIST_BLUE=$(docker-compose -p ${DOCKER_APP_NAME}-blue -f docker-compose.blue.yml ps | grep Up)
 
 # 배포 시작한 날짜와 시간을 기록
+echo "$EXIST_BLUE" >> $LOG_FILE
 echo "배포 시작일자 : $(date +%Y)-$(date +%m)-$(date +%d) $(date +%H):$(date +%M):$(date +%S)" >> $LOG_FILE
 
 # green이 실행중이면 blue up

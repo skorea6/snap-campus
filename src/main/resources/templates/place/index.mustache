@@ -261,14 +261,21 @@
             formData.append('eventId', nowEventId);
             formData.append('title', $('input[id="postTitle"]').val());
             formData.append('description', $('input[id="postDescription"]').val());
+            alert('test0');
             if($('input[id="postDepartment"]').val() !== ""){
+                alert('test0.1');
                 formData.append('department', $('input[id="postDepartment"]').val());
             }
 
+            alert('test1');
+
             var files = document.querySelector('input[id="postImages"]').files;
+            alert('test1.2');
             for (var i = 0; i < files.length; i++) {
                 formData.append('images', files[i]);
             }
+
+            alert('test2');
 
             $.ajax({
                 url: '/api/post/add',
@@ -282,6 +289,7 @@
                     $('#postAddModal').modal('hide');
                 },
                 error: function(xhr, status, error) {
+                    alert('test3');
                     const errorResponse = JSON.parse(xhr.responseText);
                     alert(errorResponse.statusMessage);
                 }
