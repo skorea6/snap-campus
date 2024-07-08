@@ -3,7 +3,6 @@
 cd /var/jenkins_home/custom/snapcampus
 
 # 환경변수 DOCKER_APP_NAME을 spring으로 설정
-#NGINX_CONFIG_URL=/volume1/@docker/volumes/0ba82ef715e523ffefe4a8e7c08f879aabc76bea0c059a5910c068358a552902/_data/snapcampus_url.conf
 DOCKER_APP_NAME=spring-snapcampus
 LOG_FILE=./deploy.log
 
@@ -28,9 +27,6 @@ if [ -z "$EXIST_BLUE" ]; then
   # 30초 동안 대기
   sleep 30
 
-  # 8112(green)을 8111(blue)로 변경 (nginx proxy manager)
-#  /bin/bash -c "sed -i 's/8112/8111/' ${NGINX_CONFIG_URL} && nginx -s reload"
-
   # /home/ubuntu/deploy.log: 로그 파일에 "green 중단 시작"이라는 내용을 추가
   echo "green 중단 시작 : $(date +%Y)-$(date +%m)-$(date +%d) $(date +%H):$(date +%M):$(date +%S)" >> $LOG_FILE
 
@@ -48,8 +44,6 @@ else
 	docker-compose -p ${DOCKER_APP_NAME}-green -f docker-compose.green.yml up -d --build
 
   sleep 30
-
-#  /bin/bash -c "sed -i 's/8111/8112/' ${NGINX_CONFIG_URL} && nginx -s reload"
 
   echo "blue 중단 시작 : $(date +%Y)-$(date +%m)-$(date +%d) $(date +%H):$(date +%M):$(date +%S)" >> $LOG_FILE
   docker-compose -p ${DOCKER_APP_NAME}-blue -f docker-compose.blue.yml down
