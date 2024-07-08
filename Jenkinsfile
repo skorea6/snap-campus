@@ -31,12 +31,12 @@ pipeline{
         stage('Deploy') {
             steps {
                 sh '''
-                    cp ./docker/docker-compose.blue.yml /custom/snapcampus/docker-compose.blue.yml
-                    cp ./docker/docker-compose.green.yml /custom/snapcampus/docker-compose.green.yml
-                    cp ./docker/Dockerfile /custom/snapcampus/Dockerfile
-                    cp ./scripts/deploy.sh /custom/snapcampus/deploy.sh
-                    cp ./build/libs/*.jar /custom/snapcampus
-                    /custom/snapcampus/deploy.sh
+                    cp ./docker/docker-compose.blue.yml /var/jenkins_home/custom/snapcampus
+                    cp ./docker/docker-compose.green.yml /var/jenkins_home/custom/snapcampus
+                    cp ./docker/Dockerfile /var/jenkins_home/custom/snapcampus
+                    cp ./scripts/deploy.sh /var/jenkins_home/custom/snapcampus
+                    cp ./build/libs/*.jar /var/jenkins_home/custom/snapcampus
+                    /var/jenkins_home/custom/snapcampus/deploy.sh
                 '''
             }
         }
