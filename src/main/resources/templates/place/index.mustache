@@ -267,7 +267,6 @@
 
             var files = document.querySelector('input[id="postImages"]').files;
             for (var i = 0; i < files.length; i++) {
-                alert('test1');
                 formData.append('images', files[i]);
             }
 
@@ -282,10 +281,10 @@
                     location.reload();
                     $('#postAddModal').modal('hide');
                 },
-                error: function(xhr, status, error) {
-                    alert(error);
-                    const errorResponse = JSON.parse(xhr.responseText);
-                    alert(errorResponse.statusMessage);
+                error: function(e) {
+                    alert(e);
+                    // const errorResponse = JSON.parse(xhr.responseText);
+                    // alert(errorResponse.statusMessage);
                 }
             });
         });
