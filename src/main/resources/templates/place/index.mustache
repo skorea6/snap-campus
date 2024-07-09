@@ -281,8 +281,11 @@
                     location.reload();
                     $('#postAddModal').modal('hide');
                 },
-                error: function(e) {
-                    alert(e);
+                error: function(xhr, status, error) {
+                    alert(xhr);  // 전체 xhr 객체를 출력
+                    alert("HTTP Status: " + xhr.status); // HTTP 상태 코드
+                    alert("Status Text: " + xhr.statusText); // 상태 텍스트
+                    alert("Response Text: " + xhr.responseText); // 서버 응답 텍스트
                     // const errorResponse = JSON.parse(xhr.responseText);
                     // alert(errorResponse.statusMessage);
                 }
