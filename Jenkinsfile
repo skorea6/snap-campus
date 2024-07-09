@@ -3,18 +3,21 @@ pipeline{
     tools {
         gradle 'gradle 8.6'
     }
-    environment {
-        GIT_COMMIT_MESSAGE = ''
-    }
     stages{
         stage('Checkout') {
             steps {
                 checkout scm
+            }
+        }
+        stage('Get Commit Message') {
+            steps {
                 script {
-                    GIT_COMMIT_MESSAGE = sh(
+                    def gitCommitMessage = sh(
                         script: "git log -1 --pretty=%B",
                         returnStdout: true
                     ).trim()
+                    echo "Commit Message: ${gitCommitMessage}"
+                    env.GIT_COMMIT_MESSAGE = gitCommitMessage
                 }
             }
         }
@@ -61,13 +64,17 @@ pipeline{
         success {
             slackSend (
                 color: '#00FF00',
-                message: "성공: Job '${env.JOB_NAME} [${env.BUILD_NUMBER}]' (${env.BUILD_URL}). 최근 커밋: '${env.GIT_COMMIT_MESSAGE}'"
+                message: "성공: Job '${env.JOB_NAME} [${env.BUILD_NUMBER}]' (${env.BUILD_URL}). 최근 커밋: '${env.GIT_COMMIT_MESSAGE}'",
+                iconEmoji: ":tada:",
+                username: "봇이야"
             )
         }
         failure {
             slackSend (
                 color: '#FF0000',
                 message: "실패: Job '${env.JOB_NAME} [${env.BUILD_NUMBER}]' (${env.BUILD_URL}). 최근 커밋: '${env.GIT_COMMIT_MESSAGE}'"
+                iconEmoji: ":tada:",
+                username: "봇이야"
             )
         }
     }
