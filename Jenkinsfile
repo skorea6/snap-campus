@@ -72,7 +72,7 @@ pipeline{
         failure {
             slackSend (
                 color: '#FF0000',
-                message: "실패: Job '${env.JOB_NAME} [${env.BUILD_NUMBER}]' (${env.BUILD_URL}). 최근 커밋: '${env.GIT_COMMIT_MESSAGE}'"
+                message: "실패: Job '${env.JOB_NAME} [${env.BUILD_NUMBER}]' (${env.BUILD_URL}). 최근 커밋: '${env.GIT_COMMIT_MESSAGE}'",
                 iconEmoji: ":tada:",
                 username: "봇이야"
             )
