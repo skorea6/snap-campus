@@ -1,5 +1,8 @@
 pipeline{
     agent any
+    environment {
+        SCRIPT_PATH = '/var/jenkins_home/custom/snapcampus'
+    }
     tools {
         gradle 'gradle 8.6'
     }
@@ -48,13 +51,13 @@ pipeline{
         stage('Deploy') {
             steps {
                 sh '''
-                    cp ./docker/docker-compose.blue.yml /var/jenkins_home/custom/snapcampus
-                    cp ./docker/docker-compose.green.yml /var/jenkins_home/custom/snapcampus
-                    cp ./docker/Dockerfile /var/jenkins_home/custom/snapcampus
-                    cp ./scripts/deploy.sh /var/jenkins_home/custom/snapcampus
-                    cp ./build/libs/*.jar /var/jenkins_home/custom/snapcampus
-                    chmod +x /var/jenkins_home/custom/snapcampus/deploy.sh
-                    /var/jenkins_home/custom/snapcampus/deploy.sh
+                    cp ./docker/docker-compose.blue.yml ${SCRIPT_PATH}
+                    cp ./docker/docker-compose.green.yml ${SCRIPT_PATH}
+                    cp ./docker/Dockerfile ${SCRIPT_PATH}
+                    cp ./scripts/deploy.sh ${SCRIPT_PATH}
+                    cp ./build/libs/*.jar ${SCRIPT_PATH}
+                    chmod +x ${SCRIPT_PATH}/deploy.sh
+                    ${SCRIPT_PATH}/deploy.sh
                 '''
             }
         }

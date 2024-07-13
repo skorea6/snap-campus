@@ -1,8 +1,8 @@
 #!/bin/bash
-# 작업 디렉토리를 /home/ubuntu/app으로 변경
+# 작업 디렉토리를 /var/jenkins_home/custom/snapcampus으로 변경
 cd /var/jenkins_home/custom/snapcampus
 
-# 환경변수 DOCKER_APP_NAME을 spring으로 설정
+# 환경변수 DOCKER_APP_NAME : 컨테이너 메인 이름
 DOCKER_APP_NAME=spring-snapcampus
 LOG_FILE=./deploy.log
 
