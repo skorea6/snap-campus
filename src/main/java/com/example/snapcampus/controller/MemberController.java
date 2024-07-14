@@ -3,9 +3,13 @@ package com.example.snapcampus.controller;
 import com.example.snapcampus.dto.request.member.LoginDto;
 import com.example.snapcampus.dto.request.member.MemberSignUpDtoRequest;
 import com.example.snapcampus.dto.request.member.SignUpVerificationSendEmailDtoRequest;
+import com.example.snapcampus.dto.response.post.PostDetailDtoResponse;
+import com.example.snapcampus.entity.Member;
 import com.example.snapcampus.redis.dto.EmailVerificationDto;
 import com.example.snapcampus.redis.dto.EmailVerificationDtoResponse;
 import com.example.snapcampus.service.MemberService;
+import com.example.snapcampus.service.PostService;
+import com.example.snapcampus.service.SecurityService;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.validation.Valid;
 import org.springframework.stereotype.Controller;
@@ -16,16 +20,35 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import org.springframework.web.servlet.support.RequestContextUtils;
 
+import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Controller
 @RequestMapping("/member")
 public class MemberController {
     private final MemberService memberService;
+    private final SecurityService securityService;
+    private final PostService postService;
 
-    public MemberController(MemberService memberService) {
+    public MemberController(MemberService memberService, SecurityService securityService, PostService postService) {
         this.memberService = memberService;
+        this.securityService = securityService;
+        this.postService = postService;
+    }
+
+    @GetMapping("/info")
+    public String info(Model model) {
+        String memberUserId = securityService.getMemberUserId();
+        Optional<Member> member = memberService.searchUser(memberUserId);
+
+        List<PostDetailDtoResponse> myPosts = postService.getMyPosts(memberUserId);
+
+        model.addAttribute("memberInfo", member.get().toDto());
+        model.addAttribute("myPosts", myPosts);
+
+        return "member/info";
     }
 
     @GetMapping("/login")

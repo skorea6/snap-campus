@@ -1,0 +1,87 @@
+{{>layout/header}}
+<div class="flex-fill">
+    <section class="section">
+        <div class="container">
+            <div class="row">
+                <div class="col-12">
+                    <h1 class="posts-entry-title" style="font-size: 30px;">내 프로필 정보</h1>
+                </div>
+            </div>
+            <div class="row justify-content-center" style="padding-top: 5px">
+                <div class="col-md-12">
+                    <div class="card">
+                        <div class="card-header">
+                            내 프로필 정보
+                        </div>
+                        <div class="card-body">
+                            <div class="row">
+                                <div class="col-lg-4 col-sm-6">
+                                    <div class="d-flex">
+                                        <label style="margin-right: 10px;"><strong>☉ 유저 아이디: </strong></label>
+                                        <p style="color:blue;">{{memberInfo.userId}}</p>
+                                    </div>
+                                </div>
+                                <div class="col-lg-4 col-sm-6">
+                                    <div class="d-flex">
+                                        <label style="margin-right: 10px;"><strong>☉ 유저 닉네임: </strong></label>
+                                        <p style="color:blue;">{{memberInfo.nick}}</p>
+                                    </div>
+                                </div>
+                                <div class="col-lg-4 col-sm-6">
+                                    <div class="d-flex">
+                                        <label style="margin-right: 10px;">☉ 유저 이름: </label>
+                                        <p>{{memberInfo.name}}</p>
+                                    </div>
+                                </div>
+                                <div class="col-lg-4 col-sm-6">
+                                    <div class="d-flex">
+                                        <label style="margin-right: 10px;">☉ 유저 이메일:</label>
+                                        <p>{{memberInfo.email}}</p>
+                                    </div>
+                                </div>
+                                <div class="col-lg-4 col-sm-6">
+                                    <div class="d-flex">
+                                        <label style="margin-right: 10px;">☉ 유저 학과:</label>
+                                        <p>{{memberInfo.department}}</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="section bg-light">
+        <div class="container">
+            <div class="row">
+                <div class="col-12">
+                    <h1 class="posts-entry-title" style="font-size: 30px;">내가 올린 사진들</h1>
+                </div>
+            </div>
+            <div class="row">
+                <h5>내가 올린 사진 목록입니다.</h5>
+            </div>
+
+            <div class="row align-items-stretch retro-layout">
+                {{#myPosts}}
+                    <div class="col-md-3">
+                        {{#.}}
+                            <a href="/post/{{id}}" class="h-entry v-height gradient" style="margin-top: 15px">
+
+                                <div class="featured-img" style="background-image: url('https://image.snapcampus.abz.kr/{{thumbImage}}');"></div>
+
+                                <div class="text">
+                                    <span class="date">{{createdAt}}</span>
+                                    <h2>{{title}}</h2>
+                                </div>
+                            </a>
+                        {{/.}}
+                    </div>
+                {{/myPosts}}
+            </div>
+        </div>
+    </section>
+</div>
+{{>layout/footer}}
