@@ -29,26 +29,9 @@ import java.util.stream.Collectors;
 @RequestMapping("/member")
 public class MemberController {
     private final MemberService memberService;
-    private final SecurityService securityService;
-    private final PostService postService;
 
-    public MemberController(MemberService memberService, SecurityService securityService, PostService postService) {
+    public MemberController(MemberService memberService) {
         this.memberService = memberService;
-        this.securityService = securityService;
-        this.postService = postService;
-    }
-
-    @GetMapping("/info")
-    public String info(Model model) {
-        String memberUserId = securityService.getMemberUserId();
-        Optional<Member> member = memberService.searchUser(memberUserId);
-
-        List<PostDetailDtoResponse> myPosts = postService.getMyPosts(memberUserId);
-
-        model.addAttribute("memberInfo", member.get().toDto());
-        model.addAttribute("myPosts", myPosts);
-
-        return "member/info";
     }
 
     @GetMapping("/login")
