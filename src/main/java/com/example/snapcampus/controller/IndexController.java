@@ -53,9 +53,4 @@ public class IndexController {
 
         return "index";
     }
-
-    @GetMapping("/search-result")
-    public String searchResult() {
-        return "search-result/index";
-    }
 }
