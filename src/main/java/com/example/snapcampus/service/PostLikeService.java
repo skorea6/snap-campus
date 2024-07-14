@@ -12,6 +12,10 @@ import com.example.snapcampus.repository.PostLikeRepository;
 import com.example.snapcampus.repository.PostRepository;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -28,7 +32,7 @@ public class PostLikeService {
 
     public List<PostDetailDtoResponse> list(String memberUserId){
         Member member = memberRepository.findByUserId(memberUserId);
-        List<PostLike> postLikes = postLikeRepository.findAllByMember(member);
+        Page<PostLike> postLikes = postLikeRepository.findAllByMember(defaultPageRequest(), member);
 
         AtomicLong counter = new AtomicLong(1);
         return postLikes.stream().map(PostLike::getPost).map(post -> post.toDetailDto(counter)).toList();
@@ -59,5 +63,13 @@ public class PostLikeService {
         postRepository.save(post);
 
         return new PostLikeDtoResponse(likeCount, status);
+    }
+
+    private static Pageable defaultPageRequest() {
+        return PageRequest.of(
+                0,
+                32,
+                Sort.by(Sort.Order.desc("createdAt"))
+        );
     }
 }
