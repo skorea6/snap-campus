@@ -16,6 +16,10 @@ import com.example.snapcampus.repository.PostRepository;
 import com.example.snapcampus.util.RandomUtil;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -35,7 +39,7 @@ public class PostService {
     private final AwsS3Service awsS3Service;
 
     public List<PostDetailDtoResponse> getAllPosts(){
-        List<Post> posts = postRepository.findAllByOrderByCreatedAtDesc();
+        Page<Post> posts = postRepository.findAllBy(defaultPageRequest());
 
         AtomicLong counter = new AtomicLong(1);
         return posts.stream().map(post -> post.toDetailDto(counter)).toList();
@@ -43,14 +47,14 @@ public class PostService {
 
     public List<PostDetailDtoResponse> getMyPosts(String memberUserId){
         Member member = memberRepository.findByUserId(memberUserId);
-        List<Post> posts = postRepository.findAllByMemberOrderByCreatedAtDesc(member);
+        Page<Post> posts = postRepository.findAllByMember(defaultPageRequest(), member);
 
         AtomicLong counter = new AtomicLong(1);
         return posts.stream().map(post -> post.toDetailDto(counter)).toList();
     }
 
     public List<PostDetailDtoResponse> getSearchPosts(String keyword){
-        List<Post> posts = postRepository.findAllByTitleContainingOrderByCreatedAtDesc(keyword);
+        Page<Post> posts = postRepository.findAllByTitleContaining(defaultPageRequest(), keyword);
 
         AtomicLong counter = new AtomicLong(1);
         return posts.stream().map(post -> post.toDetailDto(counter)).toList();
@@ -142,5 +146,14 @@ public class PostService {
             images.add(path + newFileName);
         }
         return images;
+    }
+
+
+    private static Pageable defaultPageRequest() {
+        return PageRequest.of(
+                0,
+                32,
+                Sort.by(Sort.Order.desc("createdAt"))
+        );
     }
 }
