@@ -1,0 +1,64 @@
+{{>layout/header}}
+<div class="flex-fill">
+    <section class="section" style="padding-top: 1rem;padding-bottom: 0">
+        <div class="container">
+            <div class="input-group mb-3">
+                <input type="text" class="form-control" placeholder="여기를 눌러 사진 제목을 검색하세요!" id="searchInput" {{#keyword}}value="{{keyword}}"{{/keyword}}>
+                <div class="input-group-append">
+                    <button class="btn btn-outline-secondary" type="button" id="searchButton">검색하기</button>
+                </div>
+            </div>
+        </div>
+    </section>
+    <section class="section bg-light">
+        <div class="container">
+            {{#keyword}}
+                <div class="row">
+                    <div class="col-12">
+                        <h1 class="posts-entry-title" style="font-size: 30px;">'{{keyword}}' 사진 검색결과</h1>
+                    </div>
+                </div>
+                <div class="row align-items-stretch retro-layout">
+                    {{#searchPosts}}
+                        <div class="col-md-3">
+                            {{#.}}
+                                <a href="/post/{{id}}" class="h-entry v-height gradient" style="margin-top: 15px">
+
+                                    <div class="featured-img" style="background-image: url('https://image.snapcampus.abz.kr/{{thumbImage}}');"></div>
+
+                                    <div class="text">
+                                        <span class="date">{{createdAt}}</span>
+                                        <h2>{{title}}</h2>
+                                    </div>
+                                </a>
+                            {{/.}}
+                        </div>
+                    {{/searchPosts}}
+                </div>
+            {{/keyword}}
+            {{^keyword}}
+                <div class="row">
+                    <div class="col-12">
+                        <h1 class="posts-entry-title" style="font-size: 30px;">검색어를 입력해주세요!</h1>
+                    </div>
+                </div>
+            {{/keyword}}
+        </div>
+    </section>
+</div>
+<script>
+    $(document).ready(function() {
+        $('#searchButton').click(function() {
+            var input = $('#searchInput').val();
+            window.location.href = '/post/search?keyword=' + encodeURIComponent(input);
+        });
+
+        $('#searchInput').keyup(function(event) {
+            if (event.keyCode === 13) { // Enter key code is 13
+                var input = $('#searchInput').val();
+                window.location.href = '/post/search?keyword=' + encodeURIComponent(input);
+            }
+        });
+    });
+</script>
+{{>layout/footer}}
