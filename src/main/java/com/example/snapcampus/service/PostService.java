@@ -38,11 +38,22 @@ public class PostService {
         List<Post> posts = postRepository.findAllByOrderByCreatedAtDesc();
 
         AtomicLong counter = new AtomicLong(1);
-        return posts.stream().map(post -> {
-            long currentIndex = counter.getAndIncrement();
-            currentIndex = (currentIndex - 1) % 4 + 1;
-            return post.toDetailDto(currentIndex);
-        }).toList();
+        return posts.stream().map(post -> post.toDetailDto(counter)).toList();
+    }
+
+    public List<PostDetailDtoResponse> getMyPosts(String memberUserId){
+        Member member = memberRepository.findByUserId(memberUserId);
+        List<Post> posts = postRepository.findAllByMemberOrderByCreatedAtDesc(member);
+
+        AtomicLong counter = new AtomicLong(1);
+        return posts.stream().map(post -> post.toDetailDto(counter)).toList();
+    }
+
+    public List<PostDetailDtoResponse> getSearchPosts(String keyword){
+        List<Post> posts = postRepository.findAllByTitleContainingOrderByCreatedAtDesc(keyword);
+
+        AtomicLong counter = new AtomicLong(1);
+        return posts.stream().map(post -> post.toDetailDto(counter)).toList();
     }
 
     public PostAggregateDtoResponse getPost(String memberUserId, Long id){

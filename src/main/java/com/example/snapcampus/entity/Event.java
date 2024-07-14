@@ -71,11 +71,11 @@ public class Event extends AuditingFields{
     public EventDetailDtoResponse toDetailDto(){
         AtomicLong counter = new AtomicLong(1);
 
-        return new EventDetailDtoResponse(id, name, description, DateUtil.formatDate(startDate), DateUtil.formatDate(stopDate), organizer, member.toDto(), posts.stream().map(post -> {
-            long currentIndex = counter.getAndIncrement();
-            currentIndex = (currentIndex - 1) % 4 + 1;
-            return post.toDetailDto(currentIndex);
-        }).toList());
+        return new EventDetailDtoResponse(
+                id, name, description, DateUtil.formatDate(startDate), DateUtil.formatDate(stopDate),
+                organizer, member.toDto(),
+                posts.stream().map(post -> post.toDetailDto(counter)).toList()
+        );
     }
 
     public EventAggregateDtoResponse toAggregateDto(){
