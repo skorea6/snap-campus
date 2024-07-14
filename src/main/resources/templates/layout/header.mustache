@@ -73,7 +73,7 @@
                     <a class="nav-link" href="/post/search">검색하기</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="/member/info">내 정보/사진</a>
+                    <a class="nav-link" href="{{#auth}}/user/{{auth.username}}{{/auth}}{{^auth}}/member/login{{/auth}}">내 정보/사진</a>
                 </li>
             </ul>
         </div>
