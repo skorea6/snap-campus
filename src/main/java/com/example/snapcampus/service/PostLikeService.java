@@ -2,6 +2,7 @@ package com.example.snapcampus.service;
 
 
 import com.example.snapcampus.dto.request.post.PostLikeDtoRequest;
+import com.example.snapcampus.dto.response.post.PostDetailDtoResponse;
 import com.example.snapcampus.dto.response.post.PostLikeDtoResponse;
 import com.example.snapcampus.entity.Member;
 import com.example.snapcampus.entity.Post;
@@ -13,6 +14,9 @@ import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+import java.util.concurrent.atomic.AtomicLong;
+
 
 @RequiredArgsConstructor
 @Transactional
@@ -21,6 +25,14 @@ public class PostLikeService {
     private final MemberRepository memberRepository;
     private final PostRepository postRepository;
     private final PostLikeRepository postLikeRepository;
+
+    public List<PostDetailDtoResponse> list(String memberUserId){
+        Member member = memberRepository.findByUserId(memberUserId);
+        List<PostLike> postLikes = postLikeRepository.findAllByMember(member);
+
+        AtomicLong counter = new AtomicLong(1);
+        return postLikes.stream().map(PostLike::getPost).map(post -> post.toDetailDto(counter)).toList();
+    }
 
 
     public PostLikeDtoResponse update(String memberUserId, PostLikeDtoRequest postLikeDtoRequest){

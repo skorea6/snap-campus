@@ -10,6 +10,7 @@ import lombok.ToString;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.atomic.AtomicLong;
 
 
 @Getter
@@ -79,8 +80,10 @@ public class Post extends AuditingFields{
         this.department = department;
     }
 
-    public PostDetailDtoResponse toDetailDto(Long columnIndex){
-        return new PostDetailDtoResponse(id, title, description, likeCount, department, DateUtil.formatDateTime(createdAt), images.get(0), images, columnIndex, member.toDto());
+    public PostDetailDtoResponse toDetailDto(AtomicLong counter){
+        long currentIndex = counter.getAndIncrement();
+        currentIndex = (currentIndex - 1) % 4 + 1;
+        return new PostDetailDtoResponse(id, title, description, likeCount, department, DateUtil.formatDateTime(createdAt), images.get(0), images, currentIndex, member.toDto());
     }
 
     public PostAggregateDtoResponse toAggregateDto(){
