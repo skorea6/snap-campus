@@ -48,6 +48,8 @@
 </div>
 <script>
     $(document).ready(function() {
+        $('title').text('{{#keyword}}{{keyword}}{{/keyword}} 검색 - 스냅캠퍼스');
+
         $('#searchButton').click(function() {
             var input = $('#searchInput').val();
             window.location.href = '/post/search?keyword=' + encodeURIComponent(input);

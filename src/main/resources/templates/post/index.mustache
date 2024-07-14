@@ -390,6 +390,8 @@
     }
 
     $(document).ready(function() {
+        $('title').text('{{#post}}{{title}}{{/post}} | 사진 - 스냅캠퍼스');
+
         $('#updatePostButton').click(function() {
             var formData = new FormData();
             formData.append('id', postId);

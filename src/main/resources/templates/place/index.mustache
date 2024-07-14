@@ -229,6 +229,8 @@
     }
 
     $(document).ready(function() {
+        $('title').text('{{#place}}{{placeName}}{{/place}} | 장소 - 스냅캠퍼스');
+
         $('#addEventButton').click(function() {
             var postData = {
                 mapId: mapId,
