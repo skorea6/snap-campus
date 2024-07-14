@@ -60,7 +60,7 @@ public class Member extends AuditingFields {
     }
 
     public MemberDtoResponse toDto() {
-        return new MemberDtoResponse(id, userId, nick, name, department);
+        return new MemberDtoResponse(id, userId, nick, name, department, email);
     }
 
     // TODO: of, equals, hashcode METHODS
