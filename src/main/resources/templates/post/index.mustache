@@ -160,7 +160,7 @@
                     <p class="info-description">
                         {{#post}}{{description}}{{/post}}
                     </p>
-                    <p class="info-event-info">장소: {{#post.event.map}}<a href="/place/{{id}}" style="color: #4ca0e6;">{{placeName}}</a>{{/post.event.map}}({{#post.event}}{{name}}{{/post.event}}) / 작성자: {{#post.member}}{{nick}}{{/post.member}}</p>
+                    <p class="info-event-info">장소: {{#post.event.map}}<a href="/place/{{id}}" style="color: #4ca0e6;">{{placeName}}</a>{{/post.event.map}}({{#post.event}}{{name}}{{/post.event}}) / 작성자: {{#post.member}}<a href="/user/{{userId}}" style="color: #4ca0e6;">{{nick}}</a>{{/post.member}}</p>
                     <hr>
                     <div class="comment-list">
                         <div style="margin-bottom: 10px;">
