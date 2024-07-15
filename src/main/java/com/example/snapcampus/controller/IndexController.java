@@ -34,6 +34,7 @@ public class IndexController {
 
         List<MapDtoResponse> places = mapService.getAllPlace();
         List<PostDetailDtoResponse> allPosts = postService.getAllPosts();
+        List<PostDetailDtoResponse> likeTopPosts = postService.getLikeTopPosts();
 
         List<List<PostDetailDtoResponse>> columnPosts = new ArrayList<>(4);
         for (int i = 0; i < 4; i++) {
@@ -44,6 +45,7 @@ public class IndexController {
 
         model.addAttribute("places", places);
         model.addAttribute("allColumnPosts", columnPosts);
+        model.addAttribute("likeTopPosts", likeTopPosts);
 
         if(memberUserId != null){
             List<PostDetailDtoResponse> likePosts = postLikeService.list(memberUserId);

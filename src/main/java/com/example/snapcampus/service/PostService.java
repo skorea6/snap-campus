@@ -53,6 +53,17 @@ public class PostService {
         return posts.stream().map(post -> post.toDetailDto(counter)).toList();
     }
 
+    public List<PostDetailDtoResponse> getLikeTopPosts(){
+        Page<Post> posts = postRepository.findAllBy(PageRequest.of(
+                0,
+                4,
+                Sort.by(Sort.Order.desc("likeCount"))
+        ));
+
+        AtomicLong counter = new AtomicLong(1);
+        return posts.stream().map(post -> post.toDetailDto(counter)).toList();
+    }
+
     public List<PostDetailDtoResponse> getSearchPosts(String keyword){
         Page<Post> posts = postRepository.findAllByTitleContaining(defaultPageRequest(), keyword);
 
