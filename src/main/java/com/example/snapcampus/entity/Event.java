@@ -79,7 +79,9 @@ public class Event extends AuditingFields{
     }
 
     public EventAggregateDtoResponse toAggregateDto(){
-        return new EventAggregateDtoResponse(id, name, description, DateUtil.formatDate(startDate), DateUtil.formatDate(stopDate), organizer, member.toDto(), map.toDto());
+        return new EventAggregateDtoResponse(id, name, description, DateUtil.formatDate(startDate), DateUtil.formatDate(stopDate), organizer, member.toDto(),
+                map.toDto()
+        );
     }
 }
 

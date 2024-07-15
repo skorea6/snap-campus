@@ -87,6 +87,8 @@ public class Post extends AuditingFields{
     }
 
     public PostAggregateDtoResponse toAggregateDto(){
-        return new PostAggregateDtoResponse(id, title, description, likeCount, department, DateUtil.formatDateTime(createdAt), images.get(0), images, member.toDto(), event.toAggregateDto());
+        return new PostAggregateDtoResponse(id, title, description, likeCount, department, DateUtil.formatDateTime(createdAt), images.get(0), images, member.toDto(),
+                event.toAggregateDto()
+        );
     }
 }

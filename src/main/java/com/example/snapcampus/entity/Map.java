@@ -59,7 +59,9 @@ public class Map extends AuditingFields{
     }
 
     public MapDetailDtoResponse toDetailDto(){
-        return new MapDetailDtoResponse(id, coordinate_x, coordinate_y, placeName, placeType, placeDescription, member.toDto(), events.stream().map(Event::toDetailDto).toList());
+        return new MapDetailDtoResponse(id, coordinate_x, coordinate_y, placeName, placeType, placeDescription, member.toDto(),
+                events.stream().map(Event::toDetailDto).toList()
+        );
     }
 
     public MapDtoResponse toDto(){
