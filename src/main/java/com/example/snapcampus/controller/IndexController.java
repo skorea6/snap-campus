@@ -53,6 +53,6 @@ public class IndexController {
             model.addAttribute("hasLikePosts", true);
         }
 
-        return "index";
+        return "/index";
     }
 }
