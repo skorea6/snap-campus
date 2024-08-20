@@ -30,7 +30,11 @@ public record SnapPrincipal(
 //        return SnapPrincipal.of(userId);
 //    }
 
-    public static SnapPrincipal of(String userId, String password, String nick, String name, String email, String department,  Set<RoleType> roleTypes) {
+    public SnapPrincipal(String userId, Collection<? extends GrantedAuthority> authorities) {
+        this(userId, null, null, null, null, null, authorities); // 기본 생성자에 위임
+    }
+
+    public static SnapPrincipal of(String userId, String password, String nick, String name, String email, String department, Set<RoleType> roleTypes) {
         //Set<RoleType> roleTypes = Set.of(RoleType.MEMBER);
 
         return new SnapPrincipal(
