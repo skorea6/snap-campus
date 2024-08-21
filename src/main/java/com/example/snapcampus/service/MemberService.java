@@ -1,16 +1,12 @@
 package com.example.snapcampus.service;
 
-import com.example.snapcampus.common.login.TokenInfo;
-import com.example.snapcampus.common.login.jwt.JwtTokenProvider;
 import com.example.snapcampus.common.status.RoleType;
-import com.example.snapcampus.dto.request.member.LoginDto;
 import com.example.snapcampus.dto.request.member.MemberSignUpDtoRequest;
 import com.example.snapcampus.dto.request.member.SignUpVerificationSendEmailDtoRequest;
 import com.example.snapcampus.entity.Member;
 import com.example.snapcampus.entity.MemberRole;
 import com.example.snapcampus.redis.dto.EmailVerificationDto;
 import com.example.snapcampus.redis.dto.EmailVerificationDtoResponse;
-import com.example.snapcampus.redis.repository.RefreshTokenInfoRepositoryRedis;
 import com.example.snapcampus.redis.repository.EmailVerificationRepositoryRedis;
 import com.example.snapcampus.repository.MemberRepository;
 import com.example.snapcampus.repository.MemberRoleRepository;
@@ -18,9 +14,6 @@ import com.example.snapcampus.util.MailUtil;
 import com.example.snapcampus.util.RandomUtil;
 import com.example.snapcampus.util.SenderDto;
 import lombok.RequiredArgsConstructor;
-import org.springframework.security.authentication.AuthenticationManager;
-import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
-import org.springframework.security.core.Authentication;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -37,53 +30,10 @@ public class MemberService {
     private final MemberRoleRepository memberRoleRepository;
     private final EmailVerificationRepositoryRedis emailVerificationRepositoryRedis;
     private final PasswordEncoder passwordEncoder;
-    private final JwtTokenProvider jwtTokenProvider;
-    private final RefreshTokenInfoRepositoryRedis refreshTokenInfoRepositoryRedis;
-    private final AuthenticationManager authenticationManager;
 
     @Transactional
     public Optional<Member> searchUser(String username){
         return Optional.ofNullable(memberRepository.findByUserId(username)); // .map(MemberDto::from)
-    }
-
-    /**
-     * 로그인 -> 토큰 발행
-     */
-    public TokenInfo login(LoginDto loginDto) {
-        Authentication authenticationToken = new UsernamePasswordAuthenticationToken(loginDto.getUserId(), loginDto.getPassword());
-        Authentication authentication = authenticationManager.authenticate(authenticationToken);
-        TokenInfo createToken = jwtTokenProvider.createToken(authentication);
-
-        refreshTokenInfoRepositoryRedis.save(loginDto.getUserId(), createToken.getRefreshToken());
-        return createToken;
-    }
-
-    /**
-     * 유저의 모든 Refresh 토큰 삭제
-     */
-    public void deleteAllRefreshToken(String userId) {
-        refreshTokenInfoRepositoryRedis.deleteByUserId(userId);
-    }
-
-    /**
-     * Refresh 토큰 검증 후 토큰 재발급
-     */
-    public TokenInfo validateRefreshTokenAndCreateToken(String refreshToken) throws IllegalArgumentException {
-        // Redis에 refreshToken 유효 여부 확인
-        if (refreshTokenInfoRepositoryRedis.findByRefreshToken(refreshToken) == null) {
-            throw new IllegalArgumentException("refreshToken expired or not found. Re-login required.");
-        }
-
-        // 새로운 accessToken, refreshToken 발급
-        TokenInfo newTokenInfo = jwtTokenProvider.validateRefreshTokenAndCreateToken(refreshToken);
-
-        // 기존 refreshToken Redis에서 제거 : refreshToken은 1회용
-        refreshTokenInfoRepositoryRedis.deleteByRefreshToken(refreshToken);
-
-        // 새로운 refreshToken Redis에 추가
-        refreshTokenInfoRepositoryRedis.save(newTokenInfo.getUserId(), newTokenInfo.getRefreshToken());
-
-        return newTokenInfo;
     }
 
     /**
